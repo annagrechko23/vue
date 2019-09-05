@@ -1,6 +1,6 @@
 import Vue from 'vue';
 
-export const Ripple = {
+export const ripple = {
     bind: function(el, binding) {
         var ripple = document.createElement("span");
         ripple.setAttribute("class", "simple");
@@ -39,4 +39,4 @@ export const Ripple = {
 
 };
 
-Vue.directive('ripple', Ripple)
+Vue.directive('ripple', ripple)

@@ -3,23 +3,19 @@
 		<h1>Custom switcher</h1>
 		<div class="some">
 			<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle" :checked="checked" />
-			<label for="checkbox1" class="checkbox-label" data-off="off" data-on="on"></label>
+			<label for="checkbox1" class="checkbox-label"></label>
 		</div>
-		<!-- <div class="switch-message" :msg="message">{{message}}</div> -->
+	
 	</div>
 </template>
 <script>
 export default {
-	name: "Switcher",
+	name: "kit-switcher",
 
 	props: {
 		checked: {
 			type: Boolean,
 			default: false
-		},
-		message: {
-			type: String,
-			default: "Hint"
 		}
 	}
 };

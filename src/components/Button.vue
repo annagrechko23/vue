@@ -11,8 +11,9 @@
 	</div>
 </template>
 <script>
+
 export default {
-	name: "Button",
+	name: "kit-button",
 	props: {
 		disabled: {
 			type: Boolean,

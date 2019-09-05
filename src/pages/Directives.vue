@@ -4,20 +4,10 @@
 		<button v-ripple>I prefer neon green.</button>
 	</div>
 </template>
-
 <script>
-import { Ripple } from "./../directives/Ripple.js";
-
 export default {
 	name: "Directives",
-	directives: {
-		Ripple
-	},
-	data(){
-		return {
-			msg: 'bla'
-		}
-	}
+
 };
 </script>
 <style scoped>

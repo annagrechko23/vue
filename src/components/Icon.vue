@@ -6,6 +6,6 @@
 
 <script>
 export default {
-	name: "Icon"
+	name: "kit-icon"
 };
 </script>

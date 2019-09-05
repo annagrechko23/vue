@@ -1,15 +1,6 @@
 <template>
 	<div class="wrap">
 		<h1>Custom Select</h1>
-		<!-- <select class="form-control" @change="change">
-              <option value="">Choose</option>
-              <option v-for="(option, index) in options" 
-                      :key="index" :value="option.code"
-                      :selected="selectedOption(option)">
-                      {{ option.name }}
-              </option>
-		</select>-->
-
 		<nav :class="{'nav-is-visible' : displayCategory}">
 			<span class="show-cat" @click="display" v-if="selectedItem && !displayCategory">{{selectedItem}}</span>
 			<span class="show-cat" @click="display" v-else>Choose</span>
@@ -22,15 +13,10 @@
 	</div>
 </template>
 <script>
-// import Popper from 'vue-popperjs';
-// import 'vue-popperjs/dist/vue-popper.css';
 
 export default {
-	name: "Select",
+	name: "kit-select",
 	props: ["options", "value"],
-	//  components: {
-	//       'popper': Popper
-	//     },
 	data() {
 		return {
 			selectedItem: null,
