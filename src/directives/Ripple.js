@@ -31,7 +31,6 @@ export const Ripple = {
                     ripple.style.height = height + 'px';
                     ripple.style.top = top - rect.height / 2 + 'px';
                     ripple.style.left = left - buttonSize / 2 + 'px';
-                    ripple.innerHTML = binding.value
                 }
             }, 200)
         }
