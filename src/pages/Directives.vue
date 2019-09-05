@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button v-ripple>Baby blue looks good on me.</button>
+		<button v-ripple="'red'">Baby blue looks good on me.</button>
 		<button v-ripple>I prefer neon green.</button>
 	</div>
 </template>
@@ -12,6 +12,11 @@ export default {
 	name: "Directives",
 	directives: {
 		Ripple
+	},
+	data(){
+		return {
+			msg: 'bla'
+		}
 	}
 };
 </script>

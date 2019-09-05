@@ -9,7 +9,7 @@
 }
 
 .anotherclass {
-    animation: ripple .8s ease-in;
+    animation: ripple .8s linear;
 }
 
 @keyframes ripple {
