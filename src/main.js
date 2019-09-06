@@ -14,6 +14,7 @@ import ripple from "./directives/Ripple.js";
 Vue.config.productionTip = false
 
 Vue.use(VueRouter);
+
 Vue.use(kit, {
     components: [Button, Input, Switcher, Avatar, Icon, Select],
     directives: [ripple]

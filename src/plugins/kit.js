@@ -11,15 +11,13 @@ const kit = {
     install(Vue, args = {}) {
         const components = args.components || []
         const directives = args.directives || []
-
         if (directives.length) {
             directives.forEach(Directive => {
-                Vue.directive(directives.name, Directive)
+                Vue.directive(Directive.name, Directive)
             });
         } else {
             Vue.directive(ripple.name, ripple)
         }
-
         if (components.length) {
             components.forEach(Component => {
                 Vue.component(Component.name, Component)
