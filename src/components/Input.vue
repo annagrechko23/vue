@@ -20,7 +20,7 @@
 <script>
 
 export default {
-	name: "Inputs",
+	name: "kit-input",
 
 	model: {
 		prop: "value",

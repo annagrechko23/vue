@@ -1,7 +1,6 @@
-import Vue from 'vue';
-
-export const Ripple = {
-    bind: function(el) {
+export default {
+    name: 'ripple',
+    bind: function(el, binding) {
         var ripple = document.createElement("span");
         ripple.setAttribute("class", "simple");
 
@@ -9,6 +8,8 @@ export const Ripple = {
 
         el.addEventListener('mousedown', function(event) {
             getRip(event, el);
+        });
+        el.addEventListener('mouseup', function() {
             ripple.classList.remove("anotherclass");
         });
 
@@ -20,17 +21,19 @@ export const Ripple = {
                 buttonSize = rect.width > rect.height ? rect.width : rect.height;
             setTimeout(function() {
                 if (ripple.classList.contains !== 'anotherclass') {
+                    if (binding.value) {
+                        ripple.style.background = binding.value;
+                    }
                     ripple.classList.add("anotherclass");
                     ripple.style.position = 'absolute';
                     ripple.style.width = buttonSize + 'px';
                     ripple.style.height = height + 'px';
-                    ripple.style.top = top + 'px';
-                    ripple.style.left = left + 'px';
+                    ripple.style.top = top - rect.height / 2 + 'px';
+                    ripple.style.left = left - buttonSize / 2 + 'px';
                 }
-            }, 100)
+            }, 200)
         }
     },
 
-};
 
-Vue.directive('ripple', Ripple)
+};

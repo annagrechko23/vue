@@ -1,18 +1,13 @@
 <template>
 	<div>
-		<button v-ripple>Baby blue looks good on me.</button>
+		<button v-ripple="'red'">Baby blue looks good on me.</button>
 		<button v-ripple>I prefer neon green.</button>
 	</div>
 </template>
-
 <script>
-import { Ripple } from "./../directives/Ripple.js";
-
 export default {
 	name: "Directives",
-	directives: {
-		Ripple
-	}
+
 };
 </script>
 <style scoped>

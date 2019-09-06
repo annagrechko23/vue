@@ -1,47 +1,40 @@
 <template>
-	<div class>
-		<Inputs v-model="value" :placeholder="placeholder" label="Email Address" validate>
+	<div>
+		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
 			<template #icon>
-				<Icon>
-					<img class="image-slot" :src="imageUrl" alt />
-				</Icon>
+				<kit-icon>
+					<infinity-icon class="image-slot" />
+
+				</kit-icon>
 			</template>
-		</Inputs>
+		</kit-input>
 		<hr class="custom-hr" />
-		<Button buttonClass="medium rounded">
+		<kit-button buttonClass="medium rounded">
 			Custom Button
 			<template v-slot:icon>
-				<Icon>
-					<img class="image-slot" :src="imageUrl" alt />
-				</Icon>
+				<kit-icon>
+					<campfire-icon class="image-slot" />
+				</kit-icon>
 			</template>
-		</Button>
+		</kit-button>
 		<hr class="custom-hr" />
-		<Switcher>{{message}}</Switcher>
+		<kit-switcher />
 		<hr class="custom-hr" />
-		<Avatar avatarClass="large" />
+		<kit-avatar avatarClass="large" />
 		<hr class="custom-hr" />
-		<Select v-model="flight.departure" :options="options"></Select>
+		<kit-select v-model="flight.departure" :options="options"></kit-select>
 	</div>
 </template>
 
 <script>
-import Inputs from "./../components/Input";
-import Button from "./../components/Button";
-import Switcher from "./../components/Switcher";
-import Avatar from "./../components/Avatar";
-import Select from "./../components/Select";
-import Icon from "./../components/Icon";
+import InfinityIcon from 'vue-material-design-icons/Infinity.vue';
+import CampfireIcon from 'vue-material-design-icons/Campfire.vue';
 
 export default {
 	name: "Components",
 	components: {
-		Inputs,
-		Button,
-		Switcher,
-		Avatar,
-		Select,
-		Icon
+		InfinityIcon,
+		CampfireIcon,
 	},
 	data() {
 		return {
