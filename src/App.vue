@@ -13,11 +13,8 @@ export default {
   components: {
     Home,
   },
-  
 }
-
 </script>
-
 
 <style  scoped>
 nav{

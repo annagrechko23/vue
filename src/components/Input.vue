@@ -4,7 +4,6 @@
 		<label v-if="label" class="form_label">{{ label }}</label>
 		<div class="input-wrap">
 			<slot name="icon"></slot>
-		
 			<input
 				type="text"
 				:value="value"

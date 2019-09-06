@@ -26,6 +26,7 @@ export default {
 nav{
 	margin-top: 30px;
 	text-align: left;
+	margin-bottom: 20px;
 }
 .anotherclass{
 	background-color: #000;

@@ -6,12 +6,11 @@
 </template>
 <script>
 export default {
-	name: "Directives",
-
+	name: "Directives"
 };
 </script>
 <style scoped>
-.link{
+.link {
 	padding: 20px;
 	color: #fff;
 	border: 1px solid #000;
@@ -20,15 +19,14 @@ export default {
 	background-color: #000;
 	text-decoration: none;
 }
-button{
+button {
 	background: #000;
 	color: #fff;
 	display: block;
 	width: 60%;
-padding: 30px 0;
-position: relative;
-margin: 0 auto 20px;
-overflow: hidden;
-
+	padding: 30px 0;
+	position: relative;
+	margin: 0 auto 20px;
+	overflow: hidden;
 }
 </style>

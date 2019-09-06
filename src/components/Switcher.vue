@@ -5,13 +5,11 @@
 			<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle" :checked="checked" />
 			<label for="checkbox1" class="checkbox-label"></label>
 		</div>
-	
 	</div>
 </template>
 <script>
 export default {
 	name: "kit-switcher",
-
 	props: {
 		checked: {
 			type: Boolean,
