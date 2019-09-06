@@ -4,7 +4,6 @@
 			<template #icon>
 				<kit-icon>
 					<infinity-icon class="image-slot" />
-
 				</kit-icon>
 			</template>
 		</kit-input>
@@ -22,37 +21,80 @@
 		<hr class="custom-hr" />
 		<kit-avatar avatarClass="large" />
 		<hr class="custom-hr" />
-		<kit-select v-model="flight.departure" :options="options"></kit-select>
+		<kit-select v-model="selected" :options="options" />
+		<hr class="custom-hr" />
+		<kit-slider v-if="!mobile" :list="lists" />
+		<kit-slider-mobile v-else :list="lists" />
 	</div>
 </template>
 
 <script>
-import InfinityIcon from 'vue-material-design-icons/Infinity.vue';
-import CampfireIcon from 'vue-material-design-icons/Campfire.vue';
+import InfinityIcon from "vue-material-design-icons/Infinity.vue";
+import CampfireIcon from "vue-material-design-icons/Campfire.vue";
 
 export default {
 	name: "Components",
 	components: {
 		InfinityIcon,
-		CampfireIcon,
+		CampfireIcon
 	},
 	data() {
 		return {
 			value: "",
 			placeholder: "this",
-			imageUrl:
-				"https://cdn-images-1.medium.com/max/2000/1*b3nQCtGsY2BWPFO_sUVRrg.png",
 			message: "new hint",
-			avatarUrl: "https://vuetifyjs.com/apple-touch-icon-180x180.png",
-			flight: {
-				departure: {
-					date: "01/03/2019",
-					country: {
-						name: "Argentina",
-						code: "AR"
-					}
+			mobile: window.innerWidth <= 700,
+			selected: "",
+			lists: [
+				{
+					id: 1,
+					name: "James",
+					handle: "@jokerjames",
+					img: "https://semantic-ui.com/images/avatar2/large/matthew.png"
+				},
+				{
+					id: 2,
+					name: "Fatima",
+					handle: "@fantasticfatima",
+					img: "https://semantic-ui.com/images/avatar2/large/molly.png"
+				},
+				{
+					id: 3,
+					name: "Xin",
+					handle: "@xeroxin",
+					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
+				},
+				{
+					id: 4,
+					name: "Fatima",
+					handle: "@fantasticfatima",
+					img: "https://semantic-ui.com/images/avatar2/large/molly.png"
+				},
+				{
+					id: 5,
+					name: "Xin",
+					handle: "@xeroxin",
+					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
+				},
+				{
+					id: 6,
+					name: "Xin",
+					handle: "@xeroxin",
+					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
+				},
+				{
+					id: 7,
+					name: "Fatima",
+					handle: "@fantasticfatima",
+					img: "https://semantic-ui.com/images/avatar2/large/molly.png"
+				},
+				{
+					id: 8,
+					name: "Xin",
+					handle: "@xeroxin",
+					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
 				}
-			},
+			],
 			options: [
 				{
 					name: "Argentina",
@@ -72,13 +114,20 @@ export default {
 				}
 			]
 		};
+	},
+	created() {
+		addEventListener("resize", () => {
+			this.mobile = innerWidth <= 700;
+		});
 	}
 };
 </script>
 <style>
 #app {
 	text-align: center;
+	overflow: hidden;
 }
+
 .image-slot {
 	width: 30px;
 	height: auto;

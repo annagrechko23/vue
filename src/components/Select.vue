@@ -1,64 +1,54 @@
 <template>
 	<div class="wrap">
 		<h1>Custom Select</h1>
-		<nav :class="{'nav-is-visible' : displayCategory}">
-			<span class="show-cat" @click="display" v-if="selectedItem && !displayCategory">{{selectedItem}}</span>
-			<span class="show-cat" @click="display" v-else>Choose</span>
-			<ul>
-				<li v-for="(option, index) in options" :key="index" @click="selectedOption(option)">
-					<p @click="change">{{option.name}}</p>
+		<nav :class="{'nav-is-visible': displayCategory}">
+			<span class="show-cat" @click="display">{{value ? value.name : 'Select'}}</span>
+			<ul v-if="displayCategory">
+				<li v-for="(option, index) in options" :key="index" @click="selectOption(option)">
+					<p>
+						<input type="checkbox" :value="option.name" />
+						{{option.name}}
+					</p>
 				</li>
 			</ul>
 		</nav>
 	</div>
 </template>
-<script>
 
+<script>
 export default {
 	name: "kit-select",
-	props: ["options", "value"],
 	data() {
 		return {
-			selectedItem: null,
-			displayCategory: false,
-			selected: null,
-			mutableFlightSegment: JSON.parse(JSON.stringify(this.value))
+			displayCategory: false
 		};
 	},
-	watch: {
-		value() {
-			this.mutableFlightSegment = JSON.parse(JSON.stringify(this.value));
-		}
-	},
+	props: ["options", "value"],
 	methods: {
-		selectedOption(option) {
-			this.selectedItem = option.name;
-		
-			if (this.mutableFlightSegment.country) {
-				this.selectedItem = this.mutableFlightSegment.country.name;
-					this.displayCategory = !this.displayCategory;
-				return option.code === this.mutableFlightSegment.country.code;
-			}
-			return false;
-		},
 		display() {
 			this.displayCategory = !this.displayCategory;
 		},
-		change(e) {
-			this.selectedItem = e.name;
+		selectOption(option) {
 			this.displayCategory = !this.displayCategory;
-			const selectedCode = e.target.value;
-			const option = this.options.find(option => {
-				return selectedCode === option.code;
-			});
-			this.mutableFlightSegment.country = option;
-			this.$emit("input", this.mutableFlightSegment);
+			this.$emit("input", option);
 		}
+	},
+	created: function() {
+		let self = this;
+		window.addEventListener("click", function(e) {
+			// close dropdown when clicked outside
+			if (!self.$el.contains(e.target)) {
+				self.displayCategory = false;
+			}
+		});
 	}
 };
 </script>
 
 <style scoped>
+input[type="checkbox"] {
+	display: none;
+}
 .form-control {
 	transition: border 0.3s cubic-bezier(0.25, 0.8, 0.5, 1);
 	padding: 15px 10px;
@@ -105,10 +95,10 @@ nav {
 	margin-bottom: 60px;
 }
 
-/* Create the bordera and the surrounding */
 nav ul {
 	padding: 0 10px;
 	text-align: left;
+	background-color: #fff;
 }
 
 nav ul li {
@@ -127,7 +117,6 @@ nav .show-cat:after {
 	padding-right: 10px;
 }
 
-/* Hide the li elements */
 nav p {
 	display: none;
 	font-size: 1.5rem;
@@ -135,14 +124,6 @@ nav p {
 	text-decoration: none;
 	text-transform: uppercase;
 	color: #4a5564;
-}
-
-#category-btn {
-	display: none;
-}
-
-.category-input {
-	display: none;
 }
 
 nav.nav-is-visible .show-cat:after {
@@ -160,10 +141,5 @@ nav.nav-is-visible ul li p:hover {
 }
 nav.nav-is-visible ul li:last-child {
 	margin-bottom: 10px;
-}
-
-/* Make button visible again when nav-is-visible class is toggled */
-nav.nav-is-visible #category-btn {
-	display: block;
 }
 </style>

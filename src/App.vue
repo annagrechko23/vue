@@ -13,12 +13,12 @@ export default {
   components: {
     Home,
   },
-  
 }
-
 </script>
 
-
 <style  scoped>
-
+nav{
+	height: 100%;
+  margin-bottom: 20px;
+}
 </style>
