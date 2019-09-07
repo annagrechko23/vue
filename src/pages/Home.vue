@@ -13,6 +13,7 @@ export default {
 	name: "Home"
 };
 </script>
+
 <style scoped>
 .link{
 	padding: 20px;

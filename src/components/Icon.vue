@@ -1,4 +1,4 @@
- <template>
+<template>
 	<span class="icon-wrap">
 		<slot></slot>
 	</span>

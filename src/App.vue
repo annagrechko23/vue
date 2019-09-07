@@ -5,20 +5,20 @@
 </template>
 
 <script>
-import Home from './pages/Home.vue';
-import './assets/ripple.css';
+import Home from "./pages/Home.vue";
+import "./assets/ripple.css";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    Home,
-  },
-}
+    Home
+  }
+};
 </script>
 
-<style  scoped>
-nav{
-	height: 100%;
+<style scoped>
+nav {
+  height: 100%;
   margin-bottom: 20px;
 }
 </style>

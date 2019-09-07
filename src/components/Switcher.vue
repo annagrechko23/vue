@@ -1,4 +1,4 @@
- <template>
+<template>
 	<div class="wrap">
 		<h1>Custom switcher</h1>
 		<div class="some">
@@ -7,6 +7,7 @@
 		</div>
 	</div>
 </template>
+
 <script>
 export default {
 	name: "kit-switcher",

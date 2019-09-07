@@ -4,11 +4,13 @@
 		<button v-ripple>I prefer neon green.</button>
 	</div>
 </template>
+
 <script>
 export default {
 	name: "Directives"
 };
 </script>
+
 <style scoped>
 .link {
 	padding: 20px;

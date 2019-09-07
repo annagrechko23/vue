@@ -56,7 +56,6 @@ export default {
 				else this.goToSlide(this.activeSlide);
 			}
 		},
-
 		goToSlide(number) {
 			if (number < 0) {
 				this.activeSlide = 0;
@@ -71,6 +70,7 @@ export default {
 	}
 };
 </script>
+
 <style lang="scss" scoped>
 .list-wrap {
 	display: grid;
