@@ -1,6 +1,6 @@
 <template>
 	<div class>
-		<h1>Custom Select</h1>
+		<h1>Custom Slider</h1>
 		<div class="list-wrap">
 			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
