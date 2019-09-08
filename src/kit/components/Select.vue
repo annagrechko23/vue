@@ -1,10 +1,10 @@
 <template>
 	<div class="wrap">
 		<h1>Custom Select</h1>
-		<nav :class="{'nav-is-visible': displayCategory}">
-			<span class="show-cat" @click="display">{{value ? value.name : 'Select'}}</span>
-			<ul v-if="displayCategory">
-				<li v-for="(option, index) in options" :key="index" @click="selectOption(option)">
+		<nav :class="{'nav-is-visible': visible}">
+			<span class="show-cat" @click="visible = !visible">{{value ? value.name : 'Select'}}</span>
+			<ul v-if="visible">
+				<li v-for="(option, index) in options" :key="index" @click="select(option)">
 					<p>
 						<input type="checkbox" :value="option.name" />
 						{{option.name}}
@@ -20,27 +20,25 @@ export default {
 	name: "kit-select",
 	data() {
 		return {
-			displayCategory: false
+			visible: false
 		};
 	},
-	props: ["options", "value"],
-	methods: {
-		display() {
-			this.displayCategory = !this.displayCategory;
-		},
-		selectOption(option) {
-			this.displayCategory = !this.displayCategory;
-			this.$emit("input", option);
-		}
-	},
-	created: function() {
-		let self = this;
-		window.addEventListener("click", function(e) {
-			// close dropdown when clicked outside
-			if (!self.$el.contains(e.target)) {
-				self.displayCategory = false;
+  props: {
+    value: { type: [String, Number], default: null },
+    options: { type: Array, default: () => [] },
+  },
+  created() {
+		window.addEventListener("click", e => {
+			if (!this.$el.contains(e.target)) {
+				this.visible = false;
 			}
 		});
+	},
+	methods: {
+		select(option) {
+			this.visible = !this.visible;
+			this.$emit("input", option);
+		}
 	}
 };
 </script>

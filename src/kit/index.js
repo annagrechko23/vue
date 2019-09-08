@@ -1,12 +1,18 @@
-import Input from "./../components/Input";
-import Button from "./../components/Button";
-import Switcher from "./../components/Switcher";
-import Avatar from "./../components/Avatar";
-import Select from "./../components/Select";
-import Icon from "./../components/Icon";
-import ripple from "./../directives/Ripple.js";
+import {
+  Input,
+  Button,
+  Switcher,
+  Avatar,
+  Select,
+  Icon,
+  Slider,
+  SliderMobile
+} from "./components";
+import {
+  ripple
+} from "./directives";
 
-const kit = {
+export default {
   install(Vue, args = {}) {
     const components = args.components || [];
     const directives = args.directives || [];
@@ -28,8 +34,18 @@ const kit = {
       Vue.component(Avatar.name, [Avatar]);
       Vue.component(Select.name, [Select]);
       Vue.component(Icon.name, [Icon]);
+      Vue.component(Slider.name, [Slider]);
+      Vue.component(SliderMobile.name, [SliderMobile]);
     }
   }
 };
 
-export default kit;
+export {
+  Input,
+  Button,
+  Switcher,
+  Avatar,
+  Select,
+  Icon,
+  ripple
+};

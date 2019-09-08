@@ -19,11 +19,11 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		buttonClass: {
+		buttonClass: { // use size and shape property -> :class="['button', shape, size]" 
 			type: String,
 			default: "middle rounded"
 		},
-		slotSrc: {
+		slotSrc: { // we don't need it
 			type: String,
 			default: "https://image.flaticon.com/icons/svg/67/67347.svg"
 		}

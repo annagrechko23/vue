@@ -11,21 +11,27 @@ export default {
 	name: "kit-avatar",
 	data() {
 		return {
-			firstName: "Vue",
+			firstName: "Vue", // we don't need these variables
 			lastName: "js",
 			fullName: ""
 		};
 	},
-	props: {
+	props: { // I wanna pass 2 props (name and src)
 		avatarSrc: {
 			type: String
 		},
-		avatarClass: {
+		avatarClass: { // if we wanna size or color let it be something like this -> { size: { type: String, default: 'medium', validator: type => ['small', 'medium', 'large'].includes(type)} }
 			type: String
 		}
-	},
+  },
+  cumputed: {
+    initials() { // I think it is prettier
+      const [firstName = '', lastName = ''] = this.name.split(' ');
+      return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
+    }
+  },
 	methods: {
-		getInitials() {
+		getInitials() { // use computed for this (read https://vuejs.org/v2/guide/computed.html#Computed-Caching-vs-Methods)
 			this.fullName = `${this.firstName} ${this.lastName}`;
 			return this.fullName
 				.split(" ")

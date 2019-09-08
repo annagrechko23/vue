@@ -20,10 +20,10 @@
 </template>
 
 <script>
-export default {
+export default { // I don't think we need a component for this, it is not a slider, we can create component Card.vue (https://vuetifyjs.com/en/components/cards)
 	name: "kit-slider",
 	props: {
-		list: Array
+		list: { type: Array, default: () => [] }
 	}
 };
 </script>

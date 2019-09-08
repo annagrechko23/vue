@@ -6,11 +6,13 @@
 			<slot name="icon"></slot>
 			<input
 				type="text"
+        v-bind="$attrs"
 				:value="value"
 				class="form_class"
-				@input="updateSelf($event.target.value)"
+				@input="update($event.target.value)"
 				:placeholder="placeholder"
 				:disabled="disabled"
+        v-on="$listeners"
 			/>
 		</div>
 		<p class="error" v-if="validate && !value">Error Message</p>
@@ -18,12 +20,14 @@
 </template>
 <script>
 
+// v-on="$listeners" -> https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
+
 export default {
 	name: "kit-input",
-
+  inheritAttrs: false, // https://vuejs.org/v2/api/#inheritAttrs
 	model: {
 		prop: "value",
-		event: "input"
+		event: "update" // I need to explain why
 	},
 	props: {
 		disabled: {
@@ -41,15 +45,15 @@ export default {
 		label: {
 			type: String
 		},
-		slotSrc: {
+		slotSrc: { // we don't need it
 			type: String,
 			default: "https://image.flaticon.com/icons/png/512/97/97895.png"
 		},
 		value: String
 	},
 	methods: {
-		updateSelf(value) {
-			this.$emit("input", value);
+		update(value) {
+			this.$emit("update", value);
 		}
 	}
 };

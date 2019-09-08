@@ -8,7 +8,7 @@
 	</div>
 </template>
 
-<script>
+<script> // we need to rewrite this component, let's make it like Input.vue, I wanna use v-model
 export default {
 	name: "kit-switcher",
 	props: {

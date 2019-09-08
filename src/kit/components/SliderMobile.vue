@@ -1,5 +1,5 @@
 <template>
-	<div class>
+	<div>
 		<h1>Custom Slider</h1>
 		<div class="list-wrap" v-hammer:swipe="onPan" ref="list" :style="{ width: widthWrapper }">
 			<div class="list-element" v-for="item in list" :key="item.id">
@@ -34,6 +34,9 @@ export default {
 		count() {
 			return this.list.length;
 		},
+  },
+  mounted() {
+		this.widthWrapper();
 	},
 	methods: {
 		onPan(e) {
@@ -61,12 +64,9 @@ export default {
 			} else {
 				this.activeSlide = number;
 			}
-			let percentage = -(100 / this.count )* this.activeSlide;
-			this.$refs.list.style.transform = `translateX(${percentage}%)`;
+			let percentage = -(100 / this.count )* this.activeSlide; // why we use let if we don't change this variable? (https://medium.com/nuances-of-programming/%D0%B2-%D1%87%D1%91%D0%BC-%D1%80%D0%B0%D0%B7%D0%BD%D0%B8%D1%86%D0%B0-%D0%BC%D0%B5%D0%B6%D0%B4%D1%83-var-let-%D0%B8-const-%D0%B2-javascript-3084bfe9f7a3)
+			this.$refs.list.style.transform = `translateX(${percentage}%)`; 
 		}
-	},
-	mounted() {
-		this.widthWrapper();
 	}
 };
 </script>

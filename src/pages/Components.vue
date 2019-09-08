@@ -7,6 +7,7 @@
 				</kit-icon>
 			</template>
 		</kit-input>
+    {{ value }}
 		<hr class="custom-hr" />
 		<kit-button buttonClass="medium rounded">
 			Custom Button
@@ -29,8 +30,8 @@
 </template>
 
 <script>
-import InfinityIcon from "vue-material-design-icons/Infinity.vue";
-import CampfireIcon from "vue-material-design-icons/Campfire.vue";
+import InfinityIcon from "vue-material-design-icons/Infinity.vue"; // if we import these components in kit-icon component and just pass a name of the icon it will be cool
+import CampfireIcon from "vue-material-design-icons/Campfire.vue"; // I don't wanna import these components all the time, I want to write less lines of code and characters
 
 export default {
 	name: "Components",

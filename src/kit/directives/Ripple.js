@@ -1,19 +1,19 @@
 export default {
   name: "ripple",
   bind: function(el, binding) {
-    var ripple = document.createElement("span");
+    var ripple = document.createElement("span"); // don't use var
     ripple.setAttribute("class", "simple");
 
     el.appendChild(ripple);
 
-    el.addEventListener("mousedown", function(event) {
+    el.addEventListener("mousedown", function(event) { // try to use arrow functions (https://learn.javascript.ru/es-function#funktsii-strelki-ne-imeyut-svoego-this)
       getRip(event, el);
     });
     el.addEventListener("mouseup", function() {
       ripple.classList.remove("anotherclass");
     });
 
-    function getRip(event, el) {
+    function getRip(event, el) { // try to use arrow functions
       var rect = el.getBoundingClientRect(),
         top = event.offsetY,
         left = event.offsetX,
