@@ -45,10 +45,6 @@ export default {
 		label: {
 			type: String
 		},
-		slotSrc: { // we don't need it
-			type: String,
-			default: "https://image.flaticon.com/icons/png/512/97/97895.png"
-		},
 		value: String
 	},
 	methods: {

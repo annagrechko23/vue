@@ -2,12 +2,12 @@
 	<div class="wrap">
 		<h1>Custom Select</h1>
 		<nav :class="{'nav-is-visible': visible}">
-			<span class="show-cat" @click="visible = !visible">{{value ? value.name : 'Select'}}</span>
+			<span class="show-cat" @click="visible = !visible">{{value ? value : 'Select'}}</span>
 			<ul v-if="visible">
 				<li v-for="(option, index) in options" :key="index" @click="select(option)">
 					<p>
-						<input type="checkbox" :value="option.name" />
-						{{option.name}}
+						<input type="checkbox" :value="option" />
+						{{option}}
 					</p>
 				</li>
 			</ul>

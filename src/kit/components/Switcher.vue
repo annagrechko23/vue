@@ -2,7 +2,15 @@
 	<div class="wrap">
 		<h1>Custom switcher</h1>
 		<div class="some">
-			<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle" :checked="checked" />
+			<input
+			 type="checkbox"
+			 name="checkbox1" 
+			 id="checkbox1" 
+			 class="ios-toggle" 
+			 v-bind="$attrs" 
+			 :value="value" 
+      	v-on="$listeners"
+				@input="update($event.target.value)" />
 			<label for="checkbox1" class="checkbox-label"></label>
 		</div>
 	</div>
@@ -11,10 +19,15 @@
 <script> // we need to rewrite this component, let's make it like Input.vue, I wanna use v-model
 export default {
 	name: "kit-switcher",
+	inheritAttrs: false,
 	props: {
-		checked: {
-			type: Boolean,
-			default: false
+		prop: 'checked',
+    event: 'change'
+	},
+	methods: {
+		update(value) {
+			console.log(value)
+			this.$emit("update", value);
 		}
 	}
 };

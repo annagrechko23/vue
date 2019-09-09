@@ -1,47 +1,43 @@
 <template>
 	<div>
 		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
-			<template #icon>
+			<template  #icon>
 				<kit-icon>
 					<infinity-icon class="image-slot" />
 				</kit-icon>
 			</template>
 		</kit-input>
-    {{ value }}
+		{{ value }}
 		<hr class="custom-hr" />
-		<kit-button buttonClass="medium rounded">
+		<kit-button size="medium" shape="rounded">
 			Custom Button
-			<template v-slot:icon>
-				<kit-icon>
-					<campfire-icon class="image-slot" />
-				</kit-icon>
-			</template>
+			<template #icon>
+			<kit-icon>
+				<campfire-icon  class="image-slot" />
+			</kit-icon>
+				</template>
 		</kit-button>
 		<hr class="custom-hr" />
-		<kit-switcher />
+		<kit-switcher v-model="switcher"  />
 		<hr class="custom-hr" />
-		<kit-avatar avatarClass="large" />
+		<kit-avatar size="large" name="Vue js" />
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />
-		<kit-slider v-if="!mobile" :list="lists" />
+		<kit-card v-if="!mobile" :list="lists" />
 		<kit-slider-mobile v-else :list="lists" />
 	</div>
 </template>
 
 <script>
-import InfinityIcon from "vue-material-design-icons/Infinity.vue"; // if we import these components in kit-icon component and just pass a name of the icon it will be cool
-import CampfireIcon from "vue-material-design-icons/Campfire.vue"; // I don't wanna import these components all the time, I want to write less lines of code and characters
 
 export default {
 	name: "Components",
-	components: {
-		InfinityIcon,
-		CampfireIcon
-	},
+
 	data() {
 		return {
 			value: "",
+			switcher: false,
 			placeholder: "this",
 			message: "new hint",
 			mobile: window.innerWidth <= 700,
@@ -96,24 +92,7 @@ export default {
 					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
 				}
 			],
-			options: [
-				{
-					name: "Argentina",
-					code: "AR"
-				},
-				{
-					name: "United States of America",
-					code: "US"
-				},
-				{
-					name: "Germany",
-					code: "DE"
-				},
-				{
-					name: "China",
-					code: "CN"
-				}
-			]
+			options: ["Argentina", "United States of America", "Germany", "China"]
 		};
 	},
 	created() {

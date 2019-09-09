@@ -1,6 +1,6 @@
 <template>
 	<div class>
-		<h1>Custom Slider</h1>
+		<h1>Custom Card</h1>
 		<div class="list-wrap">
 			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
@@ -21,7 +21,7 @@
 
 <script>
 export default { // I don't think we need a component for this, it is not a slider, we can create component Card.vue (https://vuetifyjs.com/en/components/cards)
-	name: "kit-slider",
+	name: "kit-card",
 	props: {
 		list: { type: Array, default: () => [] }
 	}

@@ -1,44 +1,35 @@
 <template>
 	<div class="wrap">
 		<h1>Avatar</h1>
-		<img class="avatar" v-if="avatarSrc" :src="avatarSrc" alt :class="avatarClass" />
-		<span v-else class="avatar-text" :class="avatarClass">{{getInitials()}}</span>
+		<img class="avatar" v-if="avatarSrc" :src="avatarSrc" alt :class="size" />
+		<span v-else class="avatar-text" :name="name" :class="size">{{getInitials}}</span>
 	</div>
 </template>
 
 <script>
 export default {
 	name: "kit-avatar",
-	data() {
-		return {
-			firstName: "Vue", // we don't need these variables
-			lastName: "js",
-			fullName: ""
-		};
-	},
-	props: { // I wanna pass 2 props (name and src)
+	props: {
 		avatarSrc: {
 			type: String
 		},
-		avatarClass: { // if we wanna size or color let it be something like this -> { size: { type: String, default: 'medium', validator: type => ['small', 'medium', 'large'].includes(type)} }
+		name: { //added name
 			type: String
+		},
+		size: { // used  option instead of className
+			type: String,
+			default: "medium",
+			validator: type => ["small", "medium", "large"].includes(type)
 		}
-  },
-  cumputed: {
-    initials() { // I think it is prettier
-      const [firstName = '', lastName = ''] = this.name.split(' ');
-      return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
-    }
-  },
-	methods: {
-		getInitials() { // use computed for this (read https://vuejs.org/v2/guide/computed.html#Computed-Caching-vs-Methods)
-			this.fullName = `${this.firstName} ${this.lastName}`;
-			return this.fullName
-				.split(" ")
-				.map(n => n[0])
-				.join("");
+	},
+	computed: {
+		getInitials() {
+			// replaced method
+			const [firstName = "", lastName = ""] = this.name.split(" ");
+			return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
 		}
-	}
+	},
+
 };
 </script>
 
