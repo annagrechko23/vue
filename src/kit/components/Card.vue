@@ -1,25 +1,23 @@
 <template>
-	
-			<div class="list-element" >
-				<div class="media-content">
-					<figure class="image">
-						 <slot name="img"></slot>
-					</figure>
-					
-				</div>
-				<div class="content">
-						<p>
-							<strong>{{title}}</strong>
-						</p>
-						<span>{{list.handle}}</span>
-					</div>
-					<div class="controls">
-						
-						<ul class="card-controls">
-							<li v-ripple="'red'"> <slot name="favorites"></slot></li>
-							<li v-ripple="'red'"><slot name="playlist"></slot></li>
-						</ul>
-					</div>
+	<div class="list-element" >
+		<div class="media-content">
+			<figure class="image">
+				 <slot name="img"></slot>
+			</figure>
+		</div>
+		<div class="content">
+				<p class="title">
+					<span>{{title}}</span>
+				</p>
+				<span >{{description}}</span>
+			</div>
+			<div class="controls">
+
+				<ul class="card-controls">
+					<li v-ripple="'red'"> <slot name="favorites"></slot></li>
+					<li v-ripple="'red'"><slot name="playlist"></slot></li>
+				</ul>
+			</div>
 	</div>
 </template>
 
