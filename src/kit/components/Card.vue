@@ -1,29 +1,35 @@
 <template>
-	<div class>
-		<h1>Custom Card</h1>
-		<div class="list-wrap">
-			<div class="list-element" v-for="item in list" :key="item.id">
-				<figure class="image">
-					<img :src="item.img" alt="Image" />
-				</figure>
+	
+			<div class="list-element" >
 				<div class="media-content">
-					<div class="content">
-						<p>
-							<strong>{{item.name}}</strong>
-							<span>{{item.handle}}</span>
-						</p>
-					</div>
+					<figure class="image">
+						 <slot name="img"></slot>
+					</figure>
+					
 				</div>
-			</div>
-		</div>
+				<div class="content">
+						<p>
+							<strong>{{title}}</strong>
+						</p>
+						<span>{{list.handle}}</span>
+					</div>
+					<div class="controls">
+						
+						<ul class="card-controls">
+							<li v-ripple="'red'"> <slot name="favorites"></slot></li>
+							<li v-ripple="'red'"><slot name="playlist"></slot></li>
+						</ul>
+					</div>
 	</div>
 </template>
 
 <script>
-export default { // I don't think we need a component for this, it is not a slider, we can create component Card.vue (https://vuetifyjs.com/en/components/cards)
+export default {
 	name: "kit-card",
 	props: {
-		list: { type: Array, default: () => [] }
+		list: { type: Array, default: () => [] },
+		title: { type: String, default:'' },
+		description: { type: String, default: '' },
 	}
 };
 </script>
@@ -33,17 +39,48 @@ export default { // I don't think we need a component for this, it is not a slid
 	grid-template-columns: repeat(5, 19%);
 	grid-gap: 10px;
 	transition: all 0.5s ease;
+
 	.list-element {
 		overflow: hidden;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 		padding: 16px;
 	}
-	.image img {
-		width: 100%;
+	.image {
+		margin: 0;
+		img {
+			width: 100%;
+		}
 	}
+
 	p {
 		display: grid;
+		font-size: 24px;
+		margin-bottom: 0;
 		grid-gap: 1vw;
 	}
+	.card-controls{
+		list-style-type: none;
+    display: flex;
+    align-items: center;
+    align-content: center;
+		justify-content: center;
+		li{
+			margin-right: 20px;
+			cursor: pointer;
+				padding: 10px;
+			position: relative;
+					border-radius: 50%;
+			transition: all 0.2s ease;
+			overflow: hidden;
+			&:hover{
+				border-radius: 50%;
+			padding: 10pxpx;
+				background: #ccc;
+			}
+		.material-design-icon__svg{
+				fill: #fefefe;
+			}	
+		}
+	}
 }
-</style>>
+</style>

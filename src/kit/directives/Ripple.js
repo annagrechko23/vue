@@ -1,19 +1,19 @@
 export default {
     name: "ripple",
     bind: function(el, binding) {
-        let ripple = document.createElement("span"); // don't use var
+        let ripple = document.createElement("span");
         ripple.setAttribute("class", "simple");
 
         el.appendChild(ripple);
 
-        el.addEventListener("mousedown", (event) => { // try to use arrow functions (https://learn.javascript.ru/es-function#funktsii-strelki-ne-imeyut-svoego-this)
+        el.addEventListener("mousedown", (event) => {
             getRip(event, el);
         });
         el.addEventListener("mouseup", () => {
             ripple.classList.remove("anotherclass");
         });
 
-        let getRip = (event, el) => { // try to use arrow functions
+        let getRip = (event, el) => {
             var rect = el.getBoundingClientRect(),
                 top = event.offsetY,
                 left = event.offsetX,
@@ -31,7 +31,7 @@ export default {
                     ripple.style.top = top - rect.height / 2 + "px";
                     ripple.style.left = left - buttonSize / 2 + "px";
                 }
-            }, 200);
+            }, 100);
         }
     }
 };

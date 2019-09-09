@@ -1,0 +1,6 @@
+.list-wrap {
+    display: grid;
+    grid-template-columns: repeat(5, 19%);
+    grid-gap: 10px;
+    transition: all 0.5s ease;
+}

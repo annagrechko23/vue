@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
-			<template  >
-				<kit-icon #icon>
+			<template #icon>
+				<kit-icon >
 					<infinity-icon class="image-slot" />
 				</kit-icon>
 			</template>
@@ -11,8 +11,8 @@
 		<hr class="custom-hr" />
 		<kit-button size="medium" shape="rounded">
 			Custom Button
-		<template >
-			<kit-icon #icon>
+		<template #icon>
+			<kit-icon >
 				<campfire-icon  class="image-slot" />
 			</kit-icon>
 				</template>
@@ -24,7 +24,25 @@
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />
-		<kit-card v-if="!mobile" :list="lists" />
+				<h1>Custom Card</h1>
+			<div v-if="!mobile"  class="list-wrap" :list="lists">
+			
+		<div v-for="character in lists" :key="character.id" :title="character.name">
+			<kit-card >
+			   <img slot="img" :src="character.img">
+			  <template #favorites>
+			<kit-icon >
+				<heart-icon  class="image-slot" />
+			</kit-icon>
+				</template>
+				<template #playlist>
+			<kit-icon >
+				<bookmark-icon class="image-slot" />
+			</kit-icon>
+					</template>
+		</kit-card>
+		</div>
+	</div>
 		<kit-slider-mobile v-else :list="lists" />
 	</div>
 </template>
