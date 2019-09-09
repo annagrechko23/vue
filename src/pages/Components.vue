@@ -1,8 +1,8 @@
 <template>
 	<div>
 		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
-			<template  #icon>
-				<kit-icon>
+			<template  >
+				<kit-icon #icon>
 					<infinity-icon class="image-slot" />
 				</kit-icon>
 			</template>
@@ -11,14 +11,14 @@
 		<hr class="custom-hr" />
 		<kit-button size="medium" shape="rounded">
 			Custom Button
-			<template #icon>
-			<kit-icon>
+		<template >
+			<kit-icon #icon>
 				<campfire-icon  class="image-slot" />
 			</kit-icon>
 				</template>
 		</kit-button>
 		<hr class="custom-hr" />
-		<kit-switcher v-model="switcher"  />
+		<kit-switcher v-model="checked"  />
 		<hr class="custom-hr" />
 		<kit-avatar size="large" name="Vue js" />
 		<hr class="custom-hr" />
@@ -37,7 +37,7 @@ export default {
 	data() {
 		return {
 			value: "",
-			switcher: false,
+			checked: false,
 			placeholder: "this",
 			message: "new hint",
 			mobile: window.innerWidth <= 700,

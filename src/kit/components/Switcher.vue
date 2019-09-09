@@ -3,33 +3,35 @@
 		<h1>Custom switcher</h1>
 		<div class="some">
 			<input
-			 type="checkbox"
-			 name="checkbox1" 
-			 id="checkbox1" 
-			 class="ios-toggle" 
-			 v-bind="$attrs" 
-			 :value="value" 
-      	v-on="$listeners"
-				@input="update($event.target.value)" />
+				v-bind="$attrs"
+				type="checkbox"
+				name="checkbox1"
+				id="checkbox1"
+				class="ios-toggle"
+				:checked="checked"
+				@change="$emit('change', $event.target.checked)" />
 			<label for="checkbox1" class="checkbox-label"></label>
 		</div>
 	</div>
 </template>
 
-<script> // we need to rewrite this component, let's make it like Input.vue, I wanna use v-model
+<script>
 export default {
 	name: "kit-switcher",
 	inheritAttrs: false,
-	props: {
+	model: {
 		prop: 'checked',
-    event: 'change'
+		event: 'change'
+	},
+	props: {
+		checked: Boolean,
 	},
 	methods: {
-		update(value) {
-			console.log(value)
-			this.$emit("update", value);
+		change(checked) {
+			this.$emit("change", checked);
 		}
 	}
+
 };
 </script>
 
