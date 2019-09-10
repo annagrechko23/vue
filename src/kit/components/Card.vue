@@ -28,7 +28,6 @@
 export default {
 	name: "kit-card",
 	props: {
-		list: { type: Array, default: () => [] },
 		title: { type: String, default: "" },
 		description: { type: String, default: "" }
 	}

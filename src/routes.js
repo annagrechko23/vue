@@ -1,14 +1,11 @@
 
-import Home from "@/pages/Home";
 import Components from "@/pages/Components";
 import Directives from "@/pages/Directives";
 import Login from "@/pages/Login";
+import Registration from "@/pages/Registration";
 
 const routes = [
-	{
-    path: "/",
-    component: Home
-  },
+
   {
     path: "/components",
     component: Components
@@ -20,6 +17,10 @@ const routes = [
 	{
     path: "/login",
     component: Login
+  },
+	{
+    path: "/registration",
+    component: Registration
   }
 ];
 

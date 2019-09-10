@@ -15,7 +15,7 @@
 		<hr class="custom-hr" />
 		<kit-switcher v-model="checked" />
 		<hr class="custom-hr" />
-		<kit-avatar size="large" name="Vue js" />
+		<kit-avatar size="large"  src="https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png" />
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />

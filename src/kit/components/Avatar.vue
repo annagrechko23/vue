@@ -1,7 +1,6 @@
 <template>
-	<div class="wrap">
-		<h1>Avatar</h1>
-		<img class="avatar" v-if="avatarSrc" :src="avatarSrc" alt :class="size" />
+	<div class="avatar-container">
+		<img class="avatar" v-if="src" :src="src" alt :class="size" />
 		<span v-else class="avatar-text" :name="name" :class="size">{{getInitials}}</span>
 	</div>
 </template>
@@ -10,7 +9,7 @@
 export default {
 	name: "kit-avatar",
 	props: {
-		avatarSrc: {
+		src: {
 			type: String
 		},
 		name: { //added name
@@ -34,7 +33,8 @@ export default {
 </script>
 
 <style scoped>
-.avatar-text {
+.avatar-text,
+.avatar {
 	align-content: center;
 	align-items: center;
 	justify-content: center;
