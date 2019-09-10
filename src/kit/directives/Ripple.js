@@ -6,6 +6,7 @@ export default {
 
         el.appendChild(ripple);
 
+				
         el.addEventListener("click", (event) => {
             getRip(event, el);
         });

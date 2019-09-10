@@ -1,6 +1,5 @@
  <template>
 	<div class="wrap">
-		<h1>Custom button</h1>
 		<button :class="[size, shape]" :disabled="disabled" >
 			<slot></slot>
 			<slot name="icon"></slot>
@@ -42,7 +41,7 @@ export default {
 	font-size: 18px;
 }
 .large {
-	width: 300px;
+	width: 100%;
 	height: 100px;
 	font-size: 20px;
 }
@@ -67,6 +66,7 @@ button {
 	outline: none;
 	background: #f5f5f5;
 	align-items: center;
+	border: none;
 	padding: 15px;
 	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
 		0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);
