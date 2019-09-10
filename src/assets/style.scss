@@ -4,3 +4,33 @@
     grid-gap: 10px;
     transition: all 0.5s ease;
 }
+.submit	.large{
+		background-color:#827ffe;
+		color: #fff;
+		font-weight: bold;
+		text-transform: uppercase;
+	}
+
+	.wrap-input{
+	width: auto;
+			position: relative;
+			background-color: #e6e6e6;
+			border: 1px solid transparent;
+			border-radius: 3px;
+			margin-bottom: 16px;
+			overflow: hidden;
+			input[type="password"],
+			input[type="email"]{
+					color: #403866;
+					line-height: 1.2;
+					font-size: 18px;
+					display: block;
+					background: transparent;
+					height: 62px;
+					width: 100%;
+					box-sizing: border-box;
+					border: none;
+					padding: 0 20px 0 38px;
+					overflow: hidden;
+			}
+	}

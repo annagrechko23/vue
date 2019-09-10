@@ -126,9 +126,7 @@ h1 {
 	font-weight: normal;
 	text-transform: capitalize;
 }
-.wrap {
-	margin-bottom: 40px;
-}
+
 .custom-hr {
 	width: 80%;
 	margin: 40px auto;

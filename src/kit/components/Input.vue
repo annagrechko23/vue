@@ -1,11 +1,10 @@
 <template>
 	<div class="wrap">
-		<h1>Custom input</h1>
 		<label v-if="label" class="form_label">{{ label }}</label>
 		<div class="input-wrap">
 			<slot name="icon"></slot>
 			<input
-				type="text"
+				:type="type"
         v-bind="$attrs"
 				:value="value"
 				class="form_class"
@@ -43,6 +42,9 @@ export default {
 			default: "bla"
 		},
 		label: {
+			type: String
+		},
+		type: {
 			type: String
 		},
 		value: String
