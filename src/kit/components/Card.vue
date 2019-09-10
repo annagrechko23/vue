@@ -1,23 +1,26 @@
 <template>
-	<div class="list-element" >
+	<div class="list-element">
 		<div class="media-content">
 			<figure class="image">
-				 <slot name="img"></slot>
+				<slot name="img"></slot>
 			</figure>
 		</div>
 		<div class="content">
-				<p class="title">
-					<span>{{title}}</span>
-				</p>
-				<span >{{description}}</span>
-			</div>
-			<div class="controls">
-
-				<ul class="card-controls">
-					<li v-ripple="'red'"> <slot name="favorites"></slot></li>
-					<li v-ripple="'red'"><slot name="playlist"></slot></li>
-				</ul>
-			</div>
+			<p class="title">
+				<span>{{title}}</span>
+			</p>
+			<span>{{description}}</span>
+		</div>
+		<div class="controls">
+			<ul class="card-controls">
+				<li class="button" v-ripple>
+					<slot name="favorites"></slot>
+				</li>
+				<li  class="button" v-ripple>
+					<slot name="playlist"></slot>
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 
@@ -26,8 +29,8 @@ export default {
 	name: "kit-card",
 	props: {
 		list: { type: Array, default: () => [] },
-		title: { type: String, default:'' },
-		description: { type: String, default: '' },
+		title: { type: String, default: "" },
+		description: { type: String, default: "" }
 	}
 };
 </script>
@@ -56,28 +59,28 @@ export default {
 		margin-bottom: 0;
 		grid-gap: 1vw;
 	}
-	.card-controls{
+	.card-controls {
 		list-style-type: none;
-    display: flex;
-    align-items: center;
-    align-content: center;
+		display: flex;
+		align-items: center;
+		align-content: center;
 		justify-content: center;
-		li{
+		li {
 			margin-right: 20px;
 			cursor: pointer;
-				padding: 10px;
+			padding: 10px;
 			position: relative;
-					border-radius: 50%;
+			border-radius: 50%;
 			transition: all 0.2s ease;
 			overflow: hidden;
-			&:hover{
+			&:hover {
 				border-radius: 50%;
-			padding: 10pxpx;
+				padding: 10pxpx;
 				background: #ccc;
 			}
-		.material-design-icon__svg{
+			.material-design-icon__svg {
 				fill: #fefefe;
-			}	
+			}
 		}
 	}
 }

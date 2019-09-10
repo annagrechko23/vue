@@ -21,7 +21,6 @@ import {
 Vue.config.productionTip = false;
 
 Vue.use(VueHammer);
-// Vue.component('campfire-icon', CampfireIcon);
 
 Vue.use(VueRouter);
 Vue.use(kit, {

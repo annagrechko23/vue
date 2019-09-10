@@ -1,12 +1,12 @@
 export default {
     name: "ripple",
-    bind: function(el, binding) {
+    inserted: function(el, binding) {
         let ripple = document.createElement("span");
         ripple.setAttribute("class", "simple");
 
         el.appendChild(ripple);
 
-        el.addEventListener("mousedown", (event) => {
+        el.addEventListener("click", (event) => {
             getRip(event, el);
         });
         el.addEventListener("mouseup", () => {

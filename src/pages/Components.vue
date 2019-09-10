@@ -1,40 +1,43 @@
 <template>
 	<div>
 		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
-			<kit-icon icon="InfinityIcon" />
+			<template #icon>
+			<kit-icon icon="user-secret" />
+			</template>
 		</kit-input>
 		{{ value }}
 		<hr class="custom-hr" />
 		<kit-button size="medium" shape="rounded">
+				<kit-icon icon="boxes" />
 			Custom Button
-			<kit-icon icon="campfire-icon"  />
+	
 		</kit-button>
 		<hr class="custom-hr" />
-		<kit-switcher v-model="checked"  />
+		<kit-switcher v-model="checked" />
 		<hr class="custom-hr" />
 		<kit-avatar size="large" name="Vue js" />
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />
-				<h1>Custom Card</h1>
-			<div v-if="!mobile"  class="list-wrap" :list="lists">
-			
-		<div v-for="character in lists" :key="character.id" >
-			<kit-card :description="character.handle" :title="character.name" >
-
-			   <img slot="img" :src="character.img">
-			<kit-icon icon="heart-icon" />
-			<kit-icon icon="bookmark-icon" />
-
-		</kit-card>
+		<h1>Custom Card</h1>
+		<div v-if="!mobile" class="list-wrap">
+			<div v-for="character in lists" :key="character.id">
+				<kit-card :description="character.handle" :title="character.name">
+					<img slot="img" :src="character.img" />
+								<template #favorites>
+					<kit-icon icon="heart" />
+					</template>
+					<template #playlist>
+					<kit-icon icon="bookmark" />
+					</template>
+				</kit-card>
+			</div>
 		</div>
-	</div>
 		<kit-slider-mobile v-else :list="lists" />
 	</div>
 </template>
 
 <script>
-
 export default {
 	name: "Components",
 

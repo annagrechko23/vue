@@ -18,3 +18,10 @@
         opacity: 0;
     }
 }
+.button {
+  position: relative;
+	overflow: hidden;
+	&:focus{
+		opacity: 0.8;
+	}
+}

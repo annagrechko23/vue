@@ -6,7 +6,7 @@
 
 <script>
 import Home from "./pages/Home.vue";
-import "./assets/ripple.css";
+import "./assets/ripple.scss";
 import "./assets/style.scss";
 
 export default {

@@ -1,45 +1,38 @@
 <template>
-	 <span class="icon-wrap" >
-		{{iconTag}}
+	<span class="icon-wrap">
+		<font-awesome-icon :icon="iconTag" />
 	</span>
 </template>
 
 <script>
-import Vue from 'vue';
-import InfinityIcon from "vue-material-design-icons/Infinity.vue";
-import CampfireIcon from "vue-material-design-icons/Campfire.vue";
-import Heart from "vue-material-design-icons/Heart.vue";
-import Bookmark from "vue-material-design-icons/Bookmark.vue";
+import Vue from "vue";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+	faUserSecret,
+	faHeart,
+	faSave,
+	faBookmark,
+	faBoxes
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+library.add(faUserSecret, faHeart, faSave, faBookmark, faBoxes);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 export default {
 	name: "kit-icon",
-	components: {
-		InfinityIcon,
-		CampfireIcon,
-		Heart,
-		Bookmark
-	},
+
 	props: {
 		icon: {
 			type: String,
 			default: null,
-			required: true,
+			required: true
 		}
-	},
-	data() {
-		return {
-			child_component: 'InfinityIcon' || 'CampfireIcon'
-		};
 	},
 	computed: {
 		iconTag() {
-			return `<${this.icon} />`
+			return this.icon;
 		}
 	}
-
 };
-// Vue.component('campfire-icon', InfinityIcon);
-// Vue.component('infinity-icon', CampfireIcon);
-// Vue.component('heart-icon', Heart);
-// Vue.component('bookmark-icon', Bookmark);
 </script>

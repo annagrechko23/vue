@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<button v-ripple="'red'">Baby blue looks good on me.</button>
-		<button v-ripple>I prefer neon green.</button>
+		<button class="button" v-ripple="'red'">Baby blue looks good on me.</button>
+		<button class="button" v-ripple>I prefer neon green.</button>
 	</div>
 </template>
 
@@ -21,14 +21,5 @@ export default {
 	background-color: #000;
 	text-decoration: none;
 }
-button {
-	background: #000;
-	color: #fff;
-	display: block;
-	width: 60%;
-	padding: 30px 0;
-	position: relative;
-	margin: 0 auto 20px;
-	overflow: hidden;
-}
+
 </style>
