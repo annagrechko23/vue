@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <Home />
+    <appHeader />
+		<router-view/>
   </div>
 </template>
 
 <script>
-import Home from "./pages/Home.vue";
+import appHeader from "./components/layout/Header.vue";
 import "./assets/ripple.scss";
 import "./assets/style.scss";
 
 export default {
   name: "app",
   components: {
-    Home
+    appHeader
   }
 };
 </script>
