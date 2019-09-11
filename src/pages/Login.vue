@@ -49,6 +49,7 @@ export default {
 
 .login-wrapper {
 	max-width: 600px;
-	margin: 0 auto;
+	margin: 100px auto;
+
 }
 </style>

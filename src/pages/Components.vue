@@ -22,7 +22,7 @@
 		<h1>Custom Card</h1>
 		<div v-if="!mobile" class="list-wrap">
 			<div v-for="character in lists" :key="character.id">
-				<kit-card :description="character.handle" :title="character.name">
+				<kit-card :list="lists" :description="character.handle" :title="character.name">
 					<img slot="img" :src="character.img" />
 								<template #favorites>
 					<kit-icon icon="heart" />
@@ -33,7 +33,7 @@
 				</kit-card>
 			</div>
 		</div>
-		<kit-slider-mobile v-else :list="lists" />
+	
 	</div>
 </template>
 
