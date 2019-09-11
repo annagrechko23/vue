@@ -1,8 +1,7 @@
 <template>
-	<div class="wrap">
-		<h1>Avatar</h1>
-		<img class="avatar" v-if="avatarSrc" :src="avatarSrc" alt :class="size" />
-		<span v-else class="avatar-text" :name="name" :class="size">{{getInitials}}</span>
+	<div class="avatar-container">
+		<img class="avatar" v-if="value" :src="avatarFileUrl" alt="Avatar" :class="size" />
+		<span v-else-if="!value && name" class="avatar-text" :name="name" :class="size">{{getInitials}}</span>
 	</div>
 </template>
 
@@ -10,15 +9,15 @@
 export default {
 	name: "kit-avatar",
 	props: {
-		avatarSrc: {
-			type: String
+		value: {
+			type: Blob
 		},
 		name: { //added name
 			type: String
 		},
 		size: { // used  option instead of className
 			type: String,
-			default: "medium",
+			default: "large",
 			validator: type => ["small", "medium", "large"].includes(type)
 		}
 	},
@@ -27,14 +26,20 @@ export default {
 			// replaced method
 			const [firstName = "", lastName = ""] = this.name.split(" ");
 			return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
-		}
+		},
+		avatarFileUrl: {
+            get() {
+                return this.value ? URL.createObjectURL(this.value) : '';
+            }
+        }
 	},
 
 };
 </script>
 
 <style scoped>
-.avatar-text {
+.avatar-text,
+.avatar {
 	align-content: center;
 	align-items: center;
 	justify-content: center;
@@ -45,12 +50,12 @@ export default {
 	background: #ccc;
 	color: #fff;
 	font-size: 14px;
-	margin: 0 auto;
+	margin: 10px auto;
 	text-transform: uppercase;
 }
 .large {
-	width: 100px;
-	height: 100px;
+	width: 150px;
+	height: 150px;
 	font-size: 40px;
 }
 .medium {
@@ -62,4 +67,5 @@ export default {
 	width: 50px;
 	height: 50px;
 }
+
 </style>

@@ -15,14 +15,14 @@
 		<hr class="custom-hr" />
 		<kit-switcher v-model="checked" />
 		<hr class="custom-hr" />
-		<kit-avatar size="large" name="Vue js" />
+		<kit-avatar size="large"  src="https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png" />
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />
 		<h1>Custom Card</h1>
 		<div v-if="!mobile" class="list-wrap">
 			<div v-for="character in lists" :key="character.id">
-				<kit-card :description="character.handle" :title="character.name">
+				<kit-card :list="lists" :description="character.handle" :title="character.name">
 					<img slot="img" :src="character.img" />
 								<template #favorites>
 					<kit-icon icon="heart" />
@@ -33,7 +33,7 @@
 				</kit-card>
 			</div>
 		</div>
-		<kit-slider-mobile v-else :list="lists" />
+	
 	</div>
 </template>
 

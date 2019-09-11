@@ -3,10 +3,19 @@
 		<h1 class="login-title">Login</h1>
 		<form>
 			<div class="wrap-input">
-				<kit-input type="email" v-model="email" placeholder="Email:" />
+				
+				<kit-input type="email" v-model="email" placeholder="Email:">
+					<template #icon>
+						<kit-icon icon="envelope" />
+						</template>
+			</kit-input>
 			</div>
 			<div class="wrap-input">
-				<kit-input type="password" v-model="password" placeholder="Password:" />
+				<kit-input type="password" v-model="password" placeholder="Password:">
+							<template #icon>
+						<kit-icon icon="key" />
+						</template>
+						</kit-input>
 			</div>
 			<kit-button class="submit" size="large" shape="square">Login</kit-button>
 		</form>
@@ -40,6 +49,7 @@ export default {
 
 .login-wrapper {
 	max-width: 600px;
-	margin: 0 auto;
+	margin: 100px auto;
+
 }
 </style>
