@@ -1,12 +1,17 @@
 <template>
-	<div class="home">
-	BLA
+	<div>
+		<nav>
+			<router-link class="link" to="/">Home</router-link>
+			<router-link class="link" to='/playlist'>Playlist</router-link>
+			<router-link class="link" to='/favorite'>Favorites</router-link>
+		</nav>
+		<router-view />
 	</div>
 </template>
 
 <script>
 export default {
-	name: "Home"
+	name: "header"
 };
 </script>
 

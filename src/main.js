@@ -10,7 +10,8 @@ import {
     Switcher,
     Card,
     SliderMobile,
-    Avatar,
+		Avatar,
+		AvatarSelector,
     Select,
     Icon
 } from "./kit/components";
@@ -31,7 +32,8 @@ Vue.use(kit, {
         Avatar,
         Icon,
         Select,
-        Card,
+				Card,
+				AvatarSelector,
         SliderMobile
     ],
     directives: [ripple]

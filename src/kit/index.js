@@ -3,7 +3,8 @@ import {
     Button,
     Switcher,
     Avatar,
-    Select,
+		Select,
+		AvatarSelector,
     Icon,
     Card,
     SliderMobile
@@ -32,6 +33,7 @@ export default {
             Vue.component(Input.name, [Input]);
             Vue.component(Switcher.name, [Switcher]);
             Vue.component(Avatar.name, [Avatar]);
+            Vue.component(AvatarSelector.name, [AvatarSelector]);
             Vue.component(Select.name, [Select]);
             Vue.component(Icon.name, [Icon]);
             Vue.component(Card.name, [Card]);

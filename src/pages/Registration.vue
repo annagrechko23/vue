@@ -3,9 +3,8 @@
 		<h1 class="login-title">Registration</h1>
 		<form>
 		<div class="avatar-wrapper	">
-				<kit-input type="file" v-model="avatar" class="avatar-upload" placeholder="First Name:">
+	<kit-upload v-model="file" :formats="formats" :size="sizeKB" />
 		
-			</kit-input>
 				<div class="title-inputs">
 						<div class="wrap-input">
 				
@@ -54,6 +53,9 @@ export default {
 			password: '',
 			email: '',
 			firstName: '',
+			file: null,
+      formats: ['image/jpg', 'image/jpeg', 'image/png'],
+      sizeKB: 700,
 			lastName: '',
 			src: 'https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png'
 		}
