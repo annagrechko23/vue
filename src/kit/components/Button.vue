@@ -1,10 +1,6 @@
  <template>
 	<div class="wrap">
-		<h1>Custom button</h1>
-		<!-- size: small, middle, large
-            shape: rounded, circle, square - as default
-		-->
-		<button :class="buttonClass" :disabled="disabled" >
+		<button :class="[size, shape]" :disabled="disabled" >
 			<slot></slot>
 			<slot name="icon"></slot>
 		</button>
@@ -19,14 +15,16 @@ export default {
 			type: Boolean,
 			default: false
 		},
-		buttonClass: {
+		size: { // instead of ButtonClass props
 			type: String,
-			default: "middle rounded"
+			default: "medium",
+			validator: type => ["small", "medium", "large"].includes(type)
 		},
-		slotSrc: {
+		shape: { // instead of ButtonClass props
 			type: String,
-			default: "https://image.flaticon.com/icons/svg/67/67347.svg"
-		}
+			default: "medium",
+			validator: type => ["rounded", "circle", "square"].includes(type)
+		},
 	}
 };
 </script>
@@ -37,13 +35,13 @@ export default {
 	height: 50px;
 	font-size: 12px;
 }
-.middle {
+.medium {
 	width: 150px;
 	height: 80px;
 	font-size: 18px;
 }
 .large {
-	width: 300px;
+	width: 100%;
 	height: 100px;
 	font-size: 20px;
 }
@@ -68,6 +66,7 @@ button {
 	outline: none;
 	background: #f5f5f5;
 	align-items: center;
+	border: none;
 	padding: 15px;
 	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2),
 		0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12);

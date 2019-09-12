@@ -1,7 +1,6 @@
 <template>
-	<div class>
-		<h1>Custom Slider</h1>
-		<div class="list-wrap" v-hammer:swipe="onPan" ref="list" :style="{ width: widthWrapper }">
+	<div ref="list">
+		<div class="list-wrap" v-hammer:swipe="onPan"  :style="{ width: widthWrapper }">
 			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
 					<img :src="item.img" alt="Image" />
@@ -34,6 +33,9 @@ export default {
 		count() {
 			return this.list.length;
 		},
+  },
+  mounted() {
+		this.widthWrapper();
 	},
 	methods: {
 		onPan(e) {
@@ -61,12 +63,9 @@ export default {
 			} else {
 				this.activeSlide = number;
 			}
-			let percentage = -(100 / this.count )* this.activeSlide;
-			this.$refs.list.style.transform = `translateX(${percentage}%)`;
+			const percentage = -(100 / this.count )* this.activeSlide; // 
+			this.$refs.list.style.transform = `translateX(${percentage}%)`; 
 		}
-	},
-	mounted() {
-		this.widthWrapper();
 	}
 };
 </script>

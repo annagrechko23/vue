@@ -9,7 +9,7 @@
 }
 
 .anotherclass {
-    animation: ripple .8s linear;
+    animation: ripple 0.3s linear;
 }
 
 @keyframes ripple {
@@ -17,4 +17,11 @@
         transform: scale(2.5);
         opacity: 0;
     }
+}
+.button {
+  position: relative;
+	overflow: hidden;
+	&:focus{
+		opacity: 0.8;
+	}
 }

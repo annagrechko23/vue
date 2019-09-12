@@ -1,21 +1,37 @@
- <template>
+<template>
 	<div class="wrap">
 		<h1>Custom switcher</h1>
 		<div class="some">
-			<input type="checkbox" name="checkbox1" id="checkbox1" class="ios-toggle" :checked="checked" />
+			<input
+				v-bind="$attrs"
+				type="checkbox"
+				name="checkbox1"
+				id="checkbox1"
+				class="ios-toggle"
+				:checked="checked"
+				@change="$emit('change', $event.target.checked)" />
 			<label for="checkbox1" class="checkbox-label"></label>
 		</div>
 	</div>
 </template>
+
 <script>
 export default {
 	name: "kit-switcher",
+	inheritAttrs: false,
+	model: {
+		prop: 'checked',
+		event: 'change'
+	},
 	props: {
-		checked: {
-			type: Boolean,
-			default: false
+		checked: Boolean,
+	},
+	methods: {
+		change(checked) {
+			this.$emit("change", checked);
 		}
 	}
+
 };
 </script>
 

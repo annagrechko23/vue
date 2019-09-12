@@ -1,16 +1,17 @@
 <template>
 	<div class="wrap">
-		<h1>Custom input</h1>
 		<label v-if="label" class="form_label">{{ label }}</label>
 		<div class="input-wrap">
 			<slot name="icon"></slot>
 			<input
-				type="text"
+				:type="type"
+        v-bind="$attrs"
 				:value="value"
 				class="form_class"
-				@input="updateSelf($event.target.value)"
+				@input="update($event.target.value)"
 				:placeholder="placeholder"
 				:disabled="disabled"
+        v-on="$listeners"
 			/>
 		</div>
 		<p class="error" v-if="validate && !value">Error Message</p>
@@ -18,12 +19,14 @@
 </template>
 <script>
 
+// v-on="$listeners" -> https://vuejs.org/v2/guide/components-custom-events.html#Binding-Native-Events-to-Components
+
 export default {
 	name: "kit-input",
-
+  inheritAttrs: false, // https://vuejs.org/v2/api/#inheritAttrs
 	model: {
 		prop: "value",
-		event: "input"
+		event: "update" // I need to explain why
 	},
 	props: {
 		disabled: {
@@ -41,15 +44,14 @@ export default {
 		label: {
 			type: String
 		},
-		slotSrc: {
-			type: String,
-			default: "https://image.flaticon.com/icons/png/512/97/97895.png"
+		type: {
+			type: String
 		},
 		value: String
 	},
 	methods: {
-		updateSelf(value) {
-			this.$emit("input", value);
+		update(value) {
+			this.$emit("update", value);
 		}
 	}
 };
@@ -67,7 +69,7 @@ export default {
 .form_class {
 	padding-left: 50px;
 	height: 40px;
-	box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.2);
+
 	border: none;
 	border-radius: 5px;
 }
@@ -83,12 +85,18 @@ export default {
 }
 .icon-wrap {
 	position: relative;
-	left: 37px;
+	left: 25px;
 }
 .input-wrap {
 	width: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: #655b5b;
+		overflow: hidden;
+					background-color: #e6e6e6;
+					border: 1px solid transparent;
+					border-radius: 3px;
+						box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
 }
 </style>

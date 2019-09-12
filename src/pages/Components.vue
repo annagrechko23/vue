@@ -2,45 +2,49 @@
 	<div>
 		<kit-input v-model="value" :placeholder="placeholder" label="Email Address" validate>
 			<template #icon>
-				<kit-icon>
-					<infinity-icon class="image-slot" />
-				</kit-icon>
+			<kit-icon icon="user-secret" />
 			</template>
 		</kit-input>
+		{{ value }}
 		<hr class="custom-hr" />
-		<kit-button buttonClass="medium rounded">
+		<kit-button size="medium" shape="rounded">
+				<kit-icon icon="boxes" />
 			Custom Button
-			<template v-slot:icon>
-				<kit-icon>
-					<campfire-icon class="image-slot" />
-				</kit-icon>
-			</template>
+	
 		</kit-button>
 		<hr class="custom-hr" />
-		<kit-switcher />
+		<kit-switcher v-model="checked" />
 		<hr class="custom-hr" />
-		<kit-avatar avatarClass="large" />
+		<kit-avatar size="large"  src="https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png" />
 		<hr class="custom-hr" />
 		<kit-select v-model="selected" :options="options" />
 		<hr class="custom-hr" />
-		<kit-slider v-if="!mobile" :list="lists" />
-		<kit-slider-mobile v-else :list="lists" />
+		<h1>Custom Card</h1>
+		<div v-if="!mobile" class="list-wrap">
+			<div v-for="character in lists" :key="character.id">
+				<kit-card :list="lists" :description="character.handle" :title="character.name">
+					<img slot="img" :src="character.img" />
+								<template #favorites>
+					<kit-icon icon="heart" />
+					</template>
+					<template #playlist>
+					<kit-icon icon="bookmark" />
+					</template>
+				</kit-card>
+			</div>
+		</div>
+	
 	</div>
 </template>
 
 <script>
-import InfinityIcon from "vue-material-design-icons/Infinity.vue";
-import CampfireIcon from "vue-material-design-icons/Campfire.vue";
-
 export default {
 	name: "Components",
-	components: {
-		InfinityIcon,
-		CampfireIcon
-	},
+
 	data() {
 		return {
 			value: "",
+			checked: false,
 			placeholder: "this",
 			message: "new hint",
 			mobile: window.innerWidth <= 700,
@@ -95,24 +99,7 @@ export default {
 					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
 				}
 			],
-			options: [
-				{
-					name: "Argentina",
-					code: "AR"
-				},
-				{
-					name: "United States of America",
-					code: "US"
-				},
-				{
-					name: "Germany",
-					code: "DE"
-				},
-				{
-					name: "China",
-					code: "CN"
-				}
-			]
+			options: ["Argentina", "United States of America", "Germany", "China"]
 		};
 	},
 	created() {
@@ -122,6 +109,7 @@ export default {
 	}
 };
 </script>
+
 <style>
 #app {
 	text-align: center;
@@ -138,9 +126,7 @@ h1 {
 	font-weight: normal;
 	text-transform: capitalize;
 }
-.wrap {
-	margin-bottom: 40px;
-}
+
 .custom-hr {
 	width: 80%;
 	margin: 40px auto;

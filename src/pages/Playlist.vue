@@ -1,24 +1,7 @@
 <template>
 	<div class="main-wrap">
-		<h1 class="main-title">Your favorites</h1>
+	<h1 class="main-title">Your Playlist</h1>
 		<div class="" v-if="!mobile">
-		
-	<kit-card  :list="lists">
-					<template #favorites>
-					<kit-icon icon="heart" />
-					</template>
-					<template #playlist>
-					<kit-icon icon="bookmark" />
-					</template>
-			
-				</kit-card>
-	
-			</div>
-				<kit-slider-mobile v-else :list="lists" />
-
-		<h1 class="main-title">Your Playlist</h1>
-		<div class="" v-if="!mobile" >
-		<div >
 				<kit-card  :list="lists">
 					<template #favorites>
 					<kit-icon icon="heart" />
@@ -26,20 +9,22 @@
 					<template #playlist>
 					<kit-icon icon="bookmark" />
 					</template>
-				
+					<template #remove >
+					<kit-icon icon="trash" />
+					</template>
 				</kit-card>
 			</div>
-			</div>
+		
 				<kit-slider-mobile v-else :list="lists" />
 	</div>
 </template>
 
 <script>
 export default {
-	name: "Home",
+	name: "playlist",
 	data() {
 		return {
-			mobile: window.innerWidth <= 700,
+		mobile: window.innerWidth <= 700,
 			lists: [
 				{
 					id: 1,
@@ -90,25 +75,8 @@ export default {
 					img: "https://semantic-ui.com/images/avatar2/large/elyse.png"
 				}
 			],
+			
 		}
 	}
 };
 </script>
-
-<style lang="scss" scoped>
-.link{
-	padding: 20px;
-	color: #fff;
-	border: 1px solid #000;
-	border-radius: 8px;
-	margin-right: 20px;
-	background-color: #000;
-	text-decoration: none;
-}
-nav{
-	margin-top: 30px;
-	text-align: left;
-	margin-bottom: 20px;
-}
-
-</style>
