@@ -11,7 +11,8 @@
   text-transform: uppercase;
 }
 
-.wrap-input {
+.wrap-input,
+.input-wrap {
   width: auto;
   position: relative;
 
@@ -45,4 +46,5 @@
 }
 body{
 	margin: 0;
+	font-family: "Helvetica Neue", sans-serif;
 }

@@ -16,12 +16,12 @@ import {
 	faEnvelope,
 	faKey,
 	faUser,
-	faTrash
-
+	faTrash,
+	faBars,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faUserSecret, faHeart, faSave, faBookmark, faBoxes, faEnvelope, faKey, faUser, faTrash);
+library.add(faUserSecret, faHeart, faSave, faBookmark, faBoxes, faEnvelope, faKey, faUser, faTrash, faBars);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 export default {

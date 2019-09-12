@@ -77,7 +77,7 @@ export default {
 
 .registration-wrapper {
 	max-width: 600px;
-	margin: 0 auto;
+	margin: 50px auto;
 }
 .avatar-wrapper{
 	display: flex;

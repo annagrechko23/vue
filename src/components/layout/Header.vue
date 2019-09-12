@@ -1,37 +1,60 @@
 <template>
 	<nav>
-		<router-link class="logo" to="/">
-			<img src="https://s.ytimg.com/yts/img/music/web/on_platform_logo_dark-vfl_PUy2j.svg" />
+		<kit-menu
+			:width="250"
+			format="push"
+			direction="left"
+			:links="[
+        {'id': 1, 'text': 'Profile', 'url': '/profile'},
+        {'id': 2, 'text': 'Change email', 'url': '/reset'},
+      ]"
+		></kit-menu>
+		<router-link class="logo" to="/playlist">
+			<img
+				src="https://www.designfreelogoonline.com/wp-content/uploads/2014/10/00111-Abstract-logos-design-free-logo-online-01.png"
+			/>
 		</router-link>
-		<ul class="menu">
-			<li>
-				<router-link class="link" to="/playlist">Playlist</router-link>
-			</li>
 
-			<li>
-				<router-link class="link" to="/favorite">Favorites</router-link>
-			</li>
-		</ul>
-		<router-link class="link" to="/login">Login</router-link>
+		<router-link class="link" to="/login" v-if="!isLoggedIn">Login</router-link>
+
+		<a href="#" class="link"  v-if="isLoggedIn" @click="logout">Logout</a>
+		{{isLoggedIn}}
+		{{getEmail}}
 	</nav>
 </template>
 
 <script>
 export default {
-	name: "appHeader"
+	name: "appHeader",
+	computed: {
+		isLoggedIn() {
+			return this.$store.getters.isLoggedIn;
+		},
+		getEmail() {
+			return this.$store.getters.getEmail;
+		}
+	},
+
+	methods: {
+		logout() {
+			this.$store.dispatch("logout");
+		}
+	}
 };
 </script>
 
-<style scoped>
+<style  lang="scss" scoped>
 .link {
 	padding: 20px;
 	color: #fff;
 	text-decoration: none;
 	font-family: "Helvetica Neue", sans-serif;
 	font-weight: bold;
+	text-align: right;
 }
 nav {
-	display: flex;
+	display: grid;
+	grid-template-columns: 50px 1fr 1fr;
 	align-items: center;
 	justify-content: space-between;
 	padding: 10px 20px;
@@ -42,6 +65,9 @@ nav {
 }
 .logo {
 	flex: 1 1 20%;
+	img {
+		max-width: 80px;
+	}
 }
 .menu {
 	display: flex;

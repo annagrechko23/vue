@@ -1,7 +1,7 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Login</h1>
-		<form>
+		<form @submit.prevent="login({ email, password })">
 			<div class="wrap-input">
 				
 				<kit-input type="email" v-model="email" placeholder="Email:">
@@ -18,6 +18,11 @@
 						</kit-input>
 			</div>
 			<kit-button class="submit" size="large" shape="square">Login</kit-button>
+		<kit-input type="submit" v-model="password" placeholder="Password:">
+							<template #icon>
+						<kit-icon icon="key" />
+						</template>
+						</kit-input>
 		</form>
 	</div>
 </template>
@@ -31,7 +36,19 @@ export default {
 			email: ''
 
 		}
-	}
+	},
+	methods: {
+    login() {
+			console.log(this.$store.dispatch("login"))
+      this.$store.dispatch("login", {
+        email: this.email,
+        password: this.password
+      }).then(() => {
+        this.$router.push("/")
+      });
+    }
+  },
+
 }
 </script>
 

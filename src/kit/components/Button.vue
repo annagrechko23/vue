@@ -65,6 +65,7 @@ button {
 	margin: 0 auto;
 	outline: none;
 	background: #f5f5f5;
+	cursor: pointer;
 	align-items: center;
 	border: none;
 	padding: 15px;
