@@ -9,6 +9,9 @@
 				<template #playlist>
 					<kit-icon icon="bookmark" />
 				</template>
+					<template #remove>
+					<kit-icon icon="trash" />
+				</template>
 			</kit-card>
 		</div>
 
