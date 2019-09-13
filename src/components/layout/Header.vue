@@ -17,27 +17,24 @@
 
 		<router-link class="link" to="/login" v-if="!isLoggedIn">Login</router-link>
 
-		<a href="#" class="link"  v-if="isLoggedIn" @click="logout">Logout</a>
-		{{isLoggedIn}}
-		{{getEmail}}
+		<a href="#" class="link" v-if="isLoggedIn" @click="logout">Logout</a>
 	</nav>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
 	name: "appHeader",
 	computed: {
-		isLoggedIn() {
-			return this.$store.getters.isLoggedIn;
-		},
-		getEmail() {
-			return this.$store.getters.getEmail;
-		}
+		...mapGetters(["isLoggedIn", "getEmail"])
 	},
 
 	methods: {
+		...mapActions(["setLogout"]),
 		logout() {
-			this.$store.dispatch("logout");
+			this.setLogout();
+			this.$router.push("/");
 		}
 	}
 };

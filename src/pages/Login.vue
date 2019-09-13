@@ -3,53 +3,48 @@
 		<h1 class="login-title">Login</h1>
 		<form @submit.prevent="login({ email, password })">
 			<div class="wrap-input">
-				
 				<kit-input type="email" v-model="email" placeholder="Email:">
 					<template #icon>
 						<kit-icon icon="envelope" />
-						</template>
-			</kit-input>
+					</template>
+				</kit-input>
 			</div>
 			<div class="wrap-input">
 				<kit-input type="password" v-model="password" placeholder="Password:">
-							<template #icon>
+					<template #icon>
 						<kit-icon icon="key" />
-						</template>
-						</kit-input>
+					</template>
+				</kit-input>
 			</div>
 			<kit-button class="submit" size="large" shape="square">Login</kit-button>
-		<kit-input type="submit" v-model="password" placeholder="Password:">
-							<template #icon>
-						<kit-icon icon="key" />
-						</template>
-						</kit-input>
 		</form>
 	</div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
 	name: "login",
 	data() {
-		return{
-			password: '',
-			email: ''
-
-		}
+		return {
+			password: "",
+			email: ""
+		};
 	},
 	methods: {
-    login() {
-			console.log(this.$store.dispatch("login"))
-      this.$store.dispatch("login", {
-        email: this.email,
-        password: this.password
-      }).then(() => {
-        this.$router.push("/")
-      });
-    }
-  },
-
-}
+		...mapActions(["setEmail", "setLogin"]),
+		login() {
+			this.setEmail({ email: this.email });
+			this.setLogin({
+				email: this.email,
+				password: this.password
+			}).then(() => {
+				this.$router.push("/");
+			});
+		}
+	}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -67,6 +62,5 @@ export default {
 .login-wrapper {
 	max-width: 600px;
 	margin: 100px auto;
-
 }
 </style>

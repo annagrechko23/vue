@@ -4,39 +4,57 @@ import Vuex from 'vuex'
 Vue.use(Vuex);
 
 const LOGIN = "LOGIN";
-const SET = "SET";
+const SET_EMAIL = "SET_EMAIL";
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+const SET_FAVORITES = "SET_FAVORITES";
+const SET_PLAYLIST = "SET_PLAYLIST";
 const LOGOUT = "LOGOUT";
 
 
 const state = {
 	isLoggedIn: !!localStorage.getItem("token"),
-	email: "",
+	email: '',
+	favourites: [],
+	playlist: [],
 }
 
 const mutations = {
 	[LOGIN](state) {
 		state.pending = true;
 	},
-	[SET](state) {
-	console.log(state)
-		state.email = state;
+	[SET_EMAIL](state, action) {
+		state.email = action;
 	},
-	[LOGIN_SUCCESS](state) {
+	[SET_FAVORITES](state, action) {
+		state.favourites.push(action);
+	},
+	[SET_PLAYLIST](state, action) {
+		state.playlist.push(action);
+	},
+	[LOGIN_SUCCESS](state, action) {
 		state.isLoggedIn = true;
+		state.email = action;
 		state.pending = false;
 	},
 	[LOGOUT](state) {
 		state.isLoggedIn = false;
-	}
+	},
 }
 
 
 const actions = {
-	login({ commit }, creds) {
-	  console.log("login...", creds);
+	setEmail({ commit }, event) {
+		commit(SET_EMAIL, event);
+	},
+	setFavourites({ commit }, event) {
+		commit(SET_FAVORITES, event);
+	},
+	setPlaylist({ commit }, event) {
+		commit(SET_PLAYLIST, event);
+	},
+	setLogin({ commit }, creds) {
 		commit(LOGIN);
-		commit(SET, creds);
+
 		return new Promise(resolve => {
 			setTimeout(() => {
 				localStorage.setItem("token", "JWT");
@@ -52,12 +70,10 @@ const actions = {
 }
 
 const getters = {
-	isLoggedIn: state => {
-		return state.isLoggedIn
-	},
-	getEmail: state => {
-		return state.email
-	}
+	isLoggedIn: state => state.isLoggedIn,
+	getEmail: state => state.email,
+	getFavourites: state => state.favourites,
+	getPlaylist: state => state.playlist,
 }
 
 export default new Vuex.Store({

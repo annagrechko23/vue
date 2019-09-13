@@ -5,7 +5,7 @@
 			<a href="javascript:void(0)" class="closebtn" @click="closeMenu()">&times;</a>
 			<router-link
 				v-for="link in links"
-				:to="link.url"
+				:to="isLoggedIn ? link.url : '/login'"
 				:key="link.id"
 				class="burger-links"
 			>{{ link.text }}</router-link>
@@ -65,8 +65,11 @@ export default {
 		menuDirection() {
 			return this.direction === "right" ? { right: 0 } : { left: 0 };
 		},
-
+	isLoggedIn() {
+			return this.$store.getters.isLoggedIn;
+		},
 		app() {
+
 			return document.getElementById("app");
 		}
 	},

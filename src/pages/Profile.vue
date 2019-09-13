@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 import Tab from "../components/layout/Tab.vue";
 import Tabs from "../components/layout/Tabs.vue";
 import Playlist from "../components/layout/Playlist.vue";
@@ -53,6 +54,9 @@ export default {
 		Tab,
 		Tabs,
 		Playlist
+	},
+	computed: {
+		...mapGetters(["isLoggedIn", "getEmail"])
 	},
 	data() {
 		return {
