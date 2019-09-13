@@ -1,24 +1,23 @@
 
-import Components from "@/pages/Components";
-import Directives from "@/pages/Directives";
+import Profile from "@/pages/Profile";
 import Login from "@/pages/Login";
-import Home from "@/pages/Home";
 import Registration from "@/pages/Registration";
+import Reset from "@/pages/Reset";
 import Playlist from "@/pages/Playlist";
 
 const routes = [
 	{
 		path: '/',
-		component: Home,
+		redirect: '/playlist',
 	},
   {
-    path: "/components",
-    component: Components
+    path: "/profile",
+    component: Profile,
+	},
+	{
+    path: "/reset",
+    component: Reset
   },
-  {
-    path: "/directives",
-    component: Directives
-	},
 	{
     path: "/login",
     component: Login

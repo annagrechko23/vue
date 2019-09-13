@@ -1,6 +1,6 @@
 <template>
 	<div class="avatar-container">
-		<img class="avatar" v-if="value" :src="avatarFileUrl" alt="Avatar" :class="size" />
+		<img class="avatar" v-if="value" :src="value" alt="Avatar" :class="size" />
 		<span v-else-if="!value && name" class="avatar-text" :name="name" :class="size">{{getInitials}}</span>
 	</div>
 </template>
@@ -10,7 +10,7 @@ export default {
 	name: "kit-avatar",
 	props: {
 		value: {
-			type: Blob
+			type: String
 		},
 		name: { //added name
 			type: String
@@ -27,11 +27,7 @@ export default {
 			const [firstName = "", lastName = ""] = this.name.split(" ");
 			return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
 		},
-		avatarFileUrl: {
-            get() {
-                return this.value ? URL.createObjectURL(this.value) : '';
-            }
-        }
+		
 	},
 
 };
