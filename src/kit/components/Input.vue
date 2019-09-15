@@ -69,7 +69,7 @@ export default {
 .form_class {
 	padding-left: 50px;
 	height: 40px;
-	box-shadow: 5px 4px 15px 2px rgba(0, 0, 0, 0.2);
+
 	border: none;
 	border-radius: 5px;
 }
@@ -85,12 +85,18 @@ export default {
 }
 .icon-wrap {
 	position: relative;
-	left: 37px;
+	left: 25px;
 }
 .input-wrap {
 	width: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	color: #655b5b;
+		overflow: hidden;
+					background-color: #e6e6e6;
+					border: 1px solid transparent;
+					border-radius: 3px;
+						box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2);
 }
 </style>

@@ -1,12 +1,20 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Login</h1>
-		<form>
+		<form @submit.prevent="login({ email, password })">
 			<div class="wrap-input">
-				<kit-input type="email" v-model="email" placeholder="Email:" />
+				<kit-input type="email" v-model="email" placeholder="Email:">
+					<template #icon>
+						<kit-icon icon="envelope" />
+					</template>
+				</kit-input>
 			</div>
 			<div class="wrap-input">
-				<kit-input type="password" v-model="password" placeholder="Password:" />
+				<kit-input type="password" v-model="password" placeholder="Password:">
+					<template #icon>
+						<kit-icon icon="key" />
+					</template>
+				</kit-input>
 			</div>
 			<kit-button class="submit" size="large" shape="square">Login</kit-button>
 		</form>
@@ -14,16 +22,29 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
 	name: "login",
 	data() {
-		return{
-			password: '',
-			email: ''
-
+		return {
+			password: "",
+			email: ""
+		};
+	},
+	methods: {
+		...mapActions(["setEmail", "setLogin"]),
+		login() {
+			this.setEmail({ email: this.email });
+			this.setLogin({
+				email: this.email,
+				password: this.password
+			}).then(() => {
+				this.$router.push("/");
+			});
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -40,6 +61,6 @@ export default {
 
 .login-wrapper {
 	max-width: 600px;
-	margin: 0 auto;
+	margin: 100px auto;
 }
 </style>
