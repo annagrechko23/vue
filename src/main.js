@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import VueRouter from "vue-router";
 import { VueHammer } from "vue2-hammer";
+import store from "./store";
 import routes from "./routes";
 import kit from "./kit";
 import {
@@ -12,7 +13,8 @@ import {
     SliderMobile,
 		Avatar,
 		AvatarSelector,
-    Select,
+		Select,
+		Menu,
     Icon
 } from "./kit/components";
 import {
@@ -31,7 +33,8 @@ Vue.use(kit, {
         Switcher,
         Avatar,
         Icon,
-        Select,
+				Select,
+				Menu,
 				Card,
 				AvatarSelector,
         SliderMobile
@@ -42,6 +45,7 @@ Vue.use(kit, {
 const router = new VueRouter({ routes });
 
 new Vue({
-    router,
+		router,
+		store,
     render: h => h(App)
 }).$mount("#app");

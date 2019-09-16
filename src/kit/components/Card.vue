@@ -1,6 +1,6 @@
 <template>
 	<div class="list-wrap">
-		<div class="list-element" v-for="item in list" :key="item.id">
+		<div class="list-element" v-for="(item, index) in list" :key="index">
 			<div class="media-content">
 				<figure class="image">
 					<img :src="item.img" />
@@ -30,7 +30,7 @@
 					>
 						<slot name="playlist"></slot>
 					</li>
-					<li class="trash" @click="remove(item.id)">
+					<li class="trash" @click="remove(item, index)">
 						<slot name="remove"></slot>
 					</li>
 				</ul>
@@ -40,6 +40,8 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
 	name: "kit-card",
 	data() {
@@ -53,20 +55,36 @@ export default {
 	props: {
 		list: { type: Array, default: () => [] }
 	},
+	computed: {
+		...mapGetters(["getFavourites", "getPlaylist"])
+	},
 	methods: {
+		...mapActions(["setFavourites", "setPlaylist"]),
+
 		favorites(selected) {
+			this.selected;
+			this.setFavourites({
+				selected
+			});
 			return this.selected.includes(selected.id)
 				? this.selected.splice(this.selected.indexOf(selected.id), 1)
 				: this.selected.push(selected.id);
 		},
 		playlist(selected) {
+			this.setPlaylist({
+				selected
+			});
 			return this.selectedPlaylist.includes(selected.id)
-				? this.selectedPlaylist.splice(
-						this.selectedPlaylist.indexOf(selected.id), 1)
+				? this.selectedPlaylist.splice(this.selectedPlaylist.indexOf(selected.id), 1)
 				: this.selectedPlaylist.push(selected.id);
 		},
-		remove(index) {
-			this.$delete(this.list, index);
+		remove(item, index) {
+			if (this.list[index] === item) {
+				this.list.splice(index, 1);
+			} else {
+				let found = this.list.indexOf(item);
+				this.list.splice(found, 1);
+			}
 		}
 	}
 };
@@ -87,6 +105,9 @@ export default {
 		margin: 0;
 		img {
 			width: 100%;
+			min-height: 200px;
+			object-fit: cover;
+			max-height: 200px;
 		}
 	}
 
@@ -96,60 +117,7 @@ export default {
 		margin-bottom: 0;
 		grid-gap: 1vw;
 	}
-	.card-controls {
-		list-style-type: none;
-		display: flex;
-		align-items: center;
-		align-content: center;
-		justify-content: center;
-		.button {
-			margin-right: 20px;
-			cursor: pointer;
-			border-radius: 50%;
-			line-height: 14px;
-			position: relative;
-			transition: all 0.2s ease;
-			overflow: hidden;
-			height: 40px;
-			width: 40px;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			&:hover {
-				border-radius: 50%;
-				background: #ccc;
-				line-height: 14px;
-			}
-			.material-design-icon__svg {
-				fill: #fefefe;
-			}
-		}
-	}
 }
-.trash {
-	.icon-wrap {
-		color: #ccc;
-		cursor: pointer;
-	}
-}
-.button {
-	.icon-wrap {
-		color: #ccc;
-	}
-	&:hover {
-		.icon-wrap {
-			color: #fff;
-		}
-	}
-	&.active {
-		.icon-wrap {
-			color: red;
-		}
-	}
-	&.activePlaylist {
-		.icon-wrap {
-			color: #000;
-		}
-	}
-}
+
+
 </style>
