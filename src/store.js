@@ -1,5 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios';
+
+
+const instance = axios.create({
+	baseURL: 'http://localhost:4000/api',
+	headers: {
+		'Accept': 'application/json',
+		'Content-Type': 'application/json',
+		'authorization': localStorage.getItem("token")
+	}
+});
 
 Vue.use(Vuex);
 
@@ -9,6 +20,7 @@ const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const SET_FAVORITES = "SET_FAVORITES";
 const SET_PLAYLIST = "SET_PLAYLIST";
 const LOGOUT = "LOGOUT";
+const SET_ALBUMS = "SET_ALBUMS";
 
 
 const state = {
@@ -16,6 +28,7 @@ const state = {
 	email: '',
 	favourites: [],
 	playlist: [],
+	albums: [],
 }
 
 const mutations = {
@@ -24,6 +37,9 @@ const mutations = {
 	},
 	[SET_EMAIL](state, action) {
 		state.email = action;
+	},
+	[SET_ALBUMS](state, action) {
+		state.albums = action;
 	},
 	[SET_FAVORITES](state, action) {
 		state.favourites.push(action);
@@ -46,22 +62,33 @@ const actions = {
 	setEmail({ commit }, event) {
 		commit(SET_EMAIL, event);
 	},
+	setAlbums({ commit }) {
+		instance.get('/albums/')
+			.then(function (response) {
+				commit(SET_ALBUMS, response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	},
 	setFavourites({ commit }, event) {
 		commit(SET_FAVORITES, event);
 	},
 	setPlaylist({ commit }, event) {
 		commit(SET_PLAYLIST, event);
 	},
-	setLogin({ commit }, creds) {
+	async setLogin({ commit }, creds) {
 		commit(LOGIN);
+		await instance.post('/auth/signin')
+			.then(function (response) {
+				const { token } = response.data;
 
-		return new Promise(resolve => {
-			setTimeout(() => {
-				localStorage.setItem("token", "JWT");
+				localStorage.setItem("token", token);
 				commit(LOGIN_SUCCESS);
-				resolve();
-			}, 1000);
-		});
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
 	},
 	logout({ commit }) {
 		localStorage.removeItem("token");
@@ -74,6 +101,7 @@ const getters = {
 	getEmail: state => state.email,
 	getFavourites: state => state.favourites,
 	getPlaylist: state => state.playlist,
+	getAlbums: state => state.albums,
 }
 
 export default new Vuex.Store({

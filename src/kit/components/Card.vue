@@ -3,7 +3,7 @@
 		<div class="list-element" v-for="(item, index) in list" :key="index">
 			<div class="media-content">
 				<figure class="image">
-					<img :src="item.img" />
+					<img :src="item.image" />
 				</figure>
 			</div>
 			<div class="content">

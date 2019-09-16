@@ -2,7 +2,7 @@
 	<div class="main-wrap">
 		<h1 class="main-title">{{title}}</h1>
 		<div class v-if="window.width > 767">
-			<kit-card :list="lists">
+			<kit-card :list="getAlbums">
 				<template #favorites>
 					<kit-icon icon="heart" />
 				</template>
@@ -15,7 +15,7 @@
 			</kit-card>
 		</div>
 
-		<kit-slider-mobile v-else :list="lists" >
+		<kit-slider-mobile v-else :list="getAlbums" >
 			<template #favorites>
 					<kit-icon icon="heart" />
 				</template>
@@ -28,6 +28,7 @@
 </template>
 
 <script>
+	import { mapGetters, mapActions  } from 'vuex';
 export default {
 	name: "playlist",
 	props: {
@@ -140,7 +141,11 @@ export default {
 			]
 		};
 	},
+	computed: {
+		...mapGetters(['getAlbums']),
+	},
 	created() {
+		this.setAlbums();
 		window.addEventListener("resize", this.handleResize);
 		this.handleResize();
 	},
@@ -148,6 +153,8 @@ export default {
 		window.removeEventListener("resize", this.handleResize);
 	},
 	methods: {
+		...mapActions(['setAlbums']),
+
 		handleResize() {
 			this.window.width = window.innerWidth;
 		}
