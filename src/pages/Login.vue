@@ -41,6 +41,7 @@ export default {
 				password: this.password
 			}).then(() => {
 				this.$router.push("/playlist");
+				this.$router.go()
 			});
 		}
 	}

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VueCookies from 'vue-cookies';
-
+import routes from "./routes";
 import instance from './helpers/interceptors.js';
 
 Vue.use(Vuex);
@@ -20,6 +20,7 @@ const UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME";
 
 
 const state = {
+	token: window.$cookies.get("token"),
 	isLoggedIn: !!window.$cookies.get("token"),
 	favourites: [],
 	playlist: [],
@@ -104,7 +105,7 @@ const actions = {
 			.then(function (response) {
 				const { token } = response.data;
 				window.$cookies.set('token', token);
-				// window.location.reload();
+
 				commit(LOGIN_SUCCESS);
 			})
 			.catch(function (error) {
@@ -124,9 +125,20 @@ const actions = {
 			})
 		})
 	},
-	setLogout({ commit }) {
-		window.$cookies.remove('token');
-		commit(LOGOUT);
+	async setLogout({ commit }) {
+
+
+
+		await instance.post('/auth/signout')
+			.then(function (response) {
+				const { token } = response.data;
+				window.$cookies.remove('token');
+
+				commit(LOGOUT);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
 	}
 }
 
