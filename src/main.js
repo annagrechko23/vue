@@ -1,6 +1,8 @@
 import Vue from "vue";
 import App from "./App.vue";
 import VueRouter from "vue-router";
+import VueCookies from 'vue-cookies';
+
 import { VueHammer } from "vue2-hammer";
 import store from "./store";
 import routes from "./routes";
@@ -24,7 +26,7 @@ import {
 Vue.config.productionTip = false;
 
 Vue.use(VueHammer);
-
+Vue.use(VueCookies);
 Vue.use(VueRouter);
 Vue.use(kit, {
     components: [

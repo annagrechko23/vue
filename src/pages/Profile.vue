@@ -9,7 +9,7 @@
 
 							<div class="title-inputs">
 								<div class="wrap-input">
-									<kit-input type="text" v-model="firstName" placeholder="First Name:">
+									<kit-input type="text" v-model="firstName"  placeholder="First Name:">
 										<template #icon>
 											<kit-icon icon="user" />
 										</template>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import Tab from "../components/layout/Tab.vue";
 import Tabs from "../components/layout/Tabs.vue";
 import Playlist from "../components/layout/Playlist.vue";
@@ -54,22 +54,70 @@ export default {
 		Tab,
 		Tabs,
 		Playlist
-	},
-	computed: {
-		...mapGetters(["isLoggedIn", "getEmail"])
-	},
+	},	
 	data() {
 		return {
 			password: "",
-			email: "",
-			firstName: "",
-			file: null,
+			// email: "",
+			// file: null,
+			// firstName: '',
 			formats: ["image/jpg", "image/jpeg", "image/png"],
 			sizeKB: 700,
-			lastName: "",
-			src:
-				"https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png"
+			// lastName: "",
+
 		};
+	},
+	created() {
+		this.setUser();
+	
+	},
+
+	computed: {
+		...mapGetters(["isLoggedIn", "getProfile"]),
+	 firstName: {
+      get() {
+        return this.getProfile.name;
+      },
+      set(value) {
+				console.log(value)
+				// this.updateFirstName(value)
+        this.$store.commit('updateCurrent', value);
+      },
+		},
+		email: {
+			get() {
+        return this.getProfile.email;
+      },
+      set(value) {
+				console.log(value)
+				// this.updateFirstName(value)
+        this.$store.commit('updateCurrent', value);
+      },
+		},
+		lastName: {
+			get() {
+        return this.getProfile.surnname;
+      },
+      set(value) {
+				console.log(value)
+				// this.updateFirstName(value)
+        this.$store.commit('updateCurrent', value);
+      },
+		},
+		file: {
+			get() {
+        return this.getProfile.image;
+      },
+      set(value) {
+				console.log(value)
+				// this.updateFirstName(value)
+        this.$store.commit('updateCurrent', value);
+      },
+		},
+
+	},
+	methods: {
+		...mapActions(['setUser', 'updateCurrent'])
 	}
 };
 </script>

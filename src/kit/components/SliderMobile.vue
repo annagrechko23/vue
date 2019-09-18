@@ -3,7 +3,7 @@
 		<div class="list-wrap" v-hammer:swipe="onPan" :style="{ width: widthWrapper }">
 			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
-					<img :src="item.img" alt="Image" />
+					<img :src="item.image" alt="Image" />
 				</figure>
 				<div class="media-content">
 					<div class="content">

@@ -1,6 +1,7 @@
 <template>
 	<div class="list-wrap">
 		<div class="list-element" v-for="(item, index) in list" :key="index">
+		
 			<div class="media-content">
 				<figure class="image">
 					<img :src="item.image" />
@@ -8,9 +9,9 @@
 			</div>
 			<div class="content">
 				<p class="title">
-					<span>{{item.name}}</span>
+					<span>{{item.author}}</span>
 				</p>
-				<span>{{item.handle}}</span>
+				<span>{{item.description}}</span>
 			</div>
 			<div class="controls">
 				<ul class="card-controls">
@@ -62,7 +63,6 @@ export default {
 		...mapActions(["setFavourites", "setPlaylist"]),
 
 		favorites(selected) {
-			this.selected;
 			this.setFavourites({
 				selected
 			});

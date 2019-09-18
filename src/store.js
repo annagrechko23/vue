@@ -1,18 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import axios from 'axios';
+import VueCookies from 'vue-cookies';
 
-
-const instance = axios.create({
-	baseURL: 'http://localhost:4000/api',
-	headers: {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json',
-		'authorization': localStorage.getItem("token")
-	}
-});
+import instance from './helpers/interceptors.js';
 
 Vue.use(Vuex);
+Vue.use(VueCookies);
+
 
 const LOGIN = "LOGIN";
 const SET_EMAIL = "SET_EMAIL";
@@ -21,14 +15,21 @@ const SET_FAVORITES = "SET_FAVORITES";
 const SET_PLAYLIST = "SET_PLAYLIST";
 const LOGOUT = "LOGOUT";
 const SET_ALBUMS = "SET_ALBUMS";
+const SET_PROFILE = "SET_PROFILE";
+const UPDATE_FIRST_NAME = "UPDATE_FIRST_NAME";
 
 
 const state = {
-	isLoggedIn: !!localStorage.getItem("token"),
-	email: '',
+	isLoggedIn: !!window.$cookies.get("token"),
 	favourites: [],
 	playlist: [],
 	albums: [],
+	profile: [],
+	current: {
+		firstName: '',
+		email: '',
+		src: '',
+ }
 }
 
 const mutations = {
@@ -40,6 +41,12 @@ const mutations = {
 	},
 	[SET_ALBUMS](state, action) {
 		state.albums = action;
+	},
+	[SET_PROFILE](state, action) {
+		state.profile = action;
+	},
+	[UPDATE_FIRST_NAME](state, action) {
+		state.firstName = action;
 	},
 	[SET_FAVORITES](state, action) {
 		state.favourites.push(action);
@@ -57,7 +64,6 @@ const mutations = {
 	},
 }
 
-
 const actions = {
 	setEmail({ commit }, event) {
 		commit(SET_EMAIL, event);
@@ -71,27 +77,55 @@ const actions = {
 				console.error(error);
 			});
 	},
+	setUser({ commit }) {
+		instance.get('/profile/')
+			.then(function (response) {
+				commit(SET_PROFILE, response.data);
+			})
+			.catch(function (error) {
+				console.error(error);
+			});
+	},
+	updateCurrent(state, payload) {
+    Object.assing(state.current, payload)
+  },
 	setFavourites({ commit }, event) {
 		commit(SET_FAVORITES, event);
+	},
+	updateFirstName({ commit }, event) {
+		commit(UPDATE_FIRST_NAME, event);
 	},
 	setPlaylist({ commit }, event) {
 		commit(SET_PLAYLIST, event);
 	},
-	async setLogin({ commit }, creds) {
+	async setLogin({ commit }) {
 		commit(LOGIN);
 		await instance.post('/auth/signin')
 			.then(function (response) {
 				const { token } = response.data;
-
-				localStorage.setItem("token", token);
+				window.$cookies.set('token', token);
+				// window.location.reload();
 				commit(LOGIN_SUCCESS);
 			})
 			.catch(function (error) {
 				console.error(error);
 			});
 	},
-	logout({ commit }) {
-		localStorage.removeItem("token");
+	refreshToken:() => {
+		return new Promise((resolve, reject) => {
+			instance.patch('/auth/refresh')
+			.then((response) => {
+				console.log(response)
+				const { token } = response.data;
+				window.$cookies.set('token', token);
+			})
+			.catch((error) =>{
+				reject(error);
+			})
+		})
+	},
+	setLogout({ commit }) {
+		window.$cookies.remove('token');
 		commit(LOGOUT);
 	}
 }
@@ -102,6 +136,7 @@ const getters = {
 	getFavourites: state => state.favourites,
 	getPlaylist: state => state.playlist,
 	getAlbums: state => state.albums,
+	getProfile: state => state.profile,
 }
 
 export default new Vuex.Store({

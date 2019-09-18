@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 module.exports = {
   create(user) {
     return jwt.sign({ user }, 'JWT.PRIVATE_KEY', {
-      expiresIn: '10m'
+      expiresIn: '1m'
     });
   },
   verify(token, options) {

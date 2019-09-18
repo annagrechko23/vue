@@ -8,9 +8,10 @@ import Playlist from "@/pages/Playlist";
 const routes = [
 	{
 		path: '/',
-		redirect: '/playlist',
+		redirect: '/login',
 	},
   {
+    name: "/root",
     path: "/profile",
     component: Profile,
 	},
@@ -19,6 +20,7 @@ const routes = [
     component: Reset
   },
 	{
+		name: "login",
     path: "/login",
     component: Login
   },
