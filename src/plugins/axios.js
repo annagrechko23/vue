@@ -1,0 +1,57 @@
+import Axios from 'axios';
+
+export default {
+	install(Vue, { store }) {
+		const axios = Axios.create({
+			baseURL: 'http://localhost:4000/api'
+		});
+
+		axios.interceptors.request.use(
+			config => {
+				config.headers.authorization = store.state.token;
+				return config;
+			}
+		);
+
+		axios.interceptors.response.use(
+			async response => response.data,
+			async error => {
+				if (error.response) {
+					const { status } = error.response;
+					if (status === 401) {
+						await store.dispatch('setLogout');
+					} else if (status === 419) {
+						store.dispatch('refresh')
+							.then(() => {
+								console.log(error.config);
+								axios.request(error.config)
+							});
+					}
+				} else {
+					throw new Error(error.message || 'error.network');
+				}
+			}
+		);
+
+		const api = {
+			profile: {
+				get: () => axios.get('/profile'),
+				put: () => axios.put('/profile')
+			},
+			albums: {
+				get: () => axios.get('/albums')
+			},
+			auth: {
+				post: () => axios.post('/auth/signin'),
+				patch: () => axios.patch('/auth/refresh'),
+				signout: () => axios.post('/auth/signout'),
+				signup: () => axios.post('/auth/signup')
+			},
+		};
+
+		Vue.prototype.$axios = axios;
+		Vue.prototype.$api = api;
+		store.$axios = axios;
+		store.$api = api;
+	}
+};

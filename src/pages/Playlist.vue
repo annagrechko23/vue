@@ -1,6 +1,5 @@
 <template>
-    <playlist title="Playlist" />
-
+	<playlist title="Playlist" />
 </template>
 
 <script>

@@ -3,20 +3,20 @@
 		<tabs>
 			<tab name="Info" :selected="true">
 				<div class="registration-wrapper">
-					<form>
+					<form @submit="save">
 						<div class="avatar-wrapper">
-							<kit-upload v-model="file" :formats="formats" :size="sizeKB" />
+							<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
 
 							<div class="title-inputs">
 								<div class="wrap-input">
-									<kit-input type="text" v-model="firstName"  placeholder="First Name:">
+									<kit-input type="text" v-model="user.name" placeholder="First Name:">
 										<template #icon>
 											<kit-icon icon="user" />
 										</template>
 									</kit-input>
 								</div>
 								<div class="wrap-input">
-									<kit-input type="text" v-model="lastName" placeholder="Last Name:">
+									<kit-input type="text" v-model="user.surnname" placeholder="Last Name:">
 										<template #icon>
 											<kit-icon icon="user" />
 										</template>
@@ -26,7 +26,7 @@
 						</div>
 
 						<div class="wrap-input">
-							<kit-input type="email" v-model="email" disabled placeholder="Email:">
+							<kit-input type="email" v-model="profile.email" disabled placeholder="Email:">
 								<template #icon>
 									<kit-icon icon="envelope" />
 								</template>
@@ -54,70 +54,55 @@ export default {
 		Tab,
 		Tabs,
 		Playlist
-	},	
+	},
 	data() {
 		return {
 			password: "",
 			// email: "",
 			// file: null,
-			// firstName: '',
+			// firstName: this.user.name,
 			formats: ["image/jpg", "image/jpeg", "image/png"],
 			sizeKB: 700,
 			// lastName: "",
-
+			profile: {}
 		};
 	},
 	created() {
-		this.setUser();
-	
+		this.getProfile();
+		// create a new object with {...}
+		this.profile = {
+			// assign values to properties of same name
+			name: this.user.name,
+			surnname: this.user.surnname,
+			email: this.user.email,
+			image: this.user.image,
+			id: this.user.id
+		};
+		console.log(this.profile)
 	},
 
 	computed: {
-		...mapGetters(["isLoggedIn", "getProfile"]),
-	 firstName: {
-      get() {
-        return this.getProfile.name;
-      },
-      set(value) {
-				console.log(value)
-				// this.updateFirstName(value)
-        this.$store.commit('updateCurrent', value);
-      },
-		},
-		email: {
-			get() {
-        return this.getProfile.email;
-      },
-      set(value) {
-				console.log(value)
-				// this.updateFirstName(value)
-        this.$store.commit('updateCurrent', value);
-      },
-		},
-		lastName: {
-			get() {
-        return this.getProfile.surnname;
-      },
-      set(value) {
-				console.log(value)
-				// this.updateFirstName(value)
-        this.$store.commit('updateCurrent', value);
-      },
-		},
-		file: {
-			get() {
-        return this.getProfile.image;
-      },
-      set(value) {
-				console.log(value)
-				// this.updateFirstName(value)
-        this.$store.commit('updateCurrent', value);
-      },
-		},
-
+		...mapGetters(["isAuth", "user"])
 	},
 	methods: {
-		...mapActions(['setUser', 'updateCurrent'])
+		...mapActions(["getProfile", "updateProfile"]),
+		save() {
+        let profile = {
+            name: this.profile.name,
+            surnname: this.profile.surnname
+        };
+
+        // ajax call to POST this.profile then
+        this.$store.commit('updateProfile', {
+					email: this.profile.email,
+					id: this.profile.id,
+					image: this.profile.image,
+           name: this.profile.name,
+            surnname: this.profile.surnname
+        });
+		}
+		
+
 	}
 };
 </script>

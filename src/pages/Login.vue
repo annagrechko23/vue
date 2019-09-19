@@ -33,16 +33,9 @@ export default {
 		};
 	},
 	methods: {
-		...mapActions(["setEmail", "setLogin"]),
-		login() {
-			this.setEmail({ email: this.email });
-			this.setLogin({
-				email: this.email,
-				password: this.password
-			}).then(() => {
-				this.$router.push("/playlist");
-				this.$router.go()
-			});
+		...mapActions(["login"]),
+	async	setlogin() {
+			await this.login();
 		}
 	}
 };
