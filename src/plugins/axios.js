@@ -21,9 +21,8 @@ export default {
 					if (status === 401) {
 						await store.dispatch('setLogout');
 					} else if (status === 419) {
-						store.dispatch('refresh')
+						await store.dispatch('refresh')
 							.then(() => {
-								console.log(error.config);
 								axios.request(error.config)
 							});
 					}
@@ -32,20 +31,25 @@ export default {
 				}
 			}
 		);
-
+		store.subscribe((mutation) => {
+			if (mutation.type === 'setToken') {
+				window.$cookies.set('token', mutation.payload);
+			}
+		});
 		const api = {
 			profile: {
 				get: () => axios.get('/profile'),
-				put: () => axios.put('/profile')
+				put: data => axios.put('/profile', data)
 			},
 			albums: {
-				get: () => axios.get('/albums')
+				get: () => axios.get('/albums/')
+				// get: ({ id }) => axios.get(`/albums/${id}`)
 			},
 			auth: {
 				post: () => axios.post('/auth/signin'),
-				patch: () => axios.patch('/auth/refresh'),
+				patch: data => axios.patch('/auth/refresh', data),
 				signout: () => axios.post('/auth/signout'),
-				signup: () => axios.post('/auth/signup')
+				signup: data => axios.post('/auth/signup', data)
 			},
 		};
 

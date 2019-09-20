@@ -26,7 +26,7 @@
 						</div>
 
 						<div class="wrap-input">
-							<kit-input type="email" v-model="profile.email" disabled placeholder="Email:">
+							<kit-input type="email" v-model="user.email" disabled placeholder="Email:">
 								<template #icon>
 									<kit-icon icon="envelope" />
 								</template>
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Tab from "../components/layout/Tab.vue";
 import Tabs from "../components/layout/Tabs.vue";
 import Playlist from "../components/layout/Playlist.vue";
@@ -57,52 +57,28 @@ export default {
 	},
 	data() {
 		return {
-			password: "",
-			// email: "",
-			// file: null,
-			// firstName: this.user.name,
 			formats: ["image/jpg", "image/jpeg", "image/png"],
-			sizeKB: 700,
-			// lastName: "",
-			profile: {}
+			sizeKB: 700
 		};
 	},
 	created() {
 		this.getProfile();
-		// create a new object with {...}
-		this.profile = {
-			// assign values to properties of same name
-			name: this.user.name,
-			surnname: this.user.surnname,
-			email: this.user.email,
-			image: this.user.image,
-			id: this.user.id
-		};
-		console.log(this.profile)
 	},
-
 	computed: {
 		...mapGetters(["isAuth", "user"])
 	},
 	methods: {
 		...mapActions(["getProfile", "updateProfile"]),
 		save() {
-        let profile = {
-            name: this.profile.name,
-            surnname: this.profile.surnname
-        };
-
-        // ajax call to POST this.profile then
-        this.$store.commit('updateProfile', {
-					email: this.profile.email,
-					id: this.profile.id,
-					image: this.profile.image,
-           name: this.profile.name,
-            surnname: this.profile.surnname
-        });
+			let profile = {
+				name: this.user.name,
+				surnname: this.user.surnname,
+				email: this.user.email,
+				image: this.user.image,
+				id: this.user.id
+			};
+			this.updateProfile(profile);
 		}
-		
-
 	}
 };
 </script>

@@ -3,7 +3,7 @@
 		<div class="list-element" v-for="(item, index) in list" :key="index">
 		
 			<div class="media-content">
-				<figure class="image">
+				<figure class="image" v-model="item.image" >
 					<img :src="item.image" />
 				</figure>
 			</div>
@@ -17,8 +17,8 @@
 				<ul class="card-controls">
 					<li
 						class="button"
-						:class="{active: selected.includes(item.id)}"
-						@click="favorites(item)"
+						:class="{active: item.favourite}"
+						@click="favorites(item.favourite)"
 						v-ripple
 					>
 						<slot name="favorites"></slot>
@@ -57,18 +57,26 @@ export default {
 		list: { type: Array, default: () => [] }
 	},
 	computed: {
-		...mapGetters(["getFavourites", "getPlaylist"])
+		...mapGetters([ "getPlaylist"])
 	},
 	methods: {
-		...mapActions(["setFavourites", "setPlaylist"]),
+		...mapActions(["getFavourites", "setPlaylist"]),
 
 		favorites(selected) {
-			this.setFavourites({
-				selected
-			});
-			return this.selected.includes(selected.id)
-				? this.selected.splice(this.selected.indexOf(selected.id), 1)
-				: this.selected.push(selected.id);
+			this.getFavourites({
+						author: this.list.author,
+						description: this.list.description,
+						favourite: selected = !selected,
+						id: this.list.id,
+						image: this.item.image,
+						name: this.list.name,
+		})
+				console.log(selected = !selected);
+
+			// this.setFavourites({
+			// 	selected
+			// });
+
 		},
 		playlist(selected) {
 			this.setPlaylist({

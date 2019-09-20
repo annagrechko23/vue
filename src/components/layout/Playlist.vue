@@ -9,26 +9,25 @@
 				<template #playlist>
 					<kit-icon icon="bookmark" />
 				</template>
-					<template #remove>
+				<template #remove>
 					<kit-icon icon="trash" />
 				</template>
 			</kit-card>
 		</div>
 
-		<kit-slider-mobile v-else :list="setAlbums" >
+		<kit-slider-mobile v-else :list="setAlbums">
 			<template #favorites>
-					<kit-icon icon="heart" />
-				</template>
-				<template #playlist>
-					<kit-icon icon="bookmark" />
-				</template>
-
+				<kit-icon icon="heart" />
+			</template>
+			<template #playlist>
+				<kit-icon icon="bookmark" />
+			</template>
 		</kit-slider-mobile>
 	</div>
 </template>
 
 <script>
-	import { mapGetters, mapActions  } from 'vuex';
+import { mapGetters, mapActions } from "vuex";
 export default {
 	name: "playlist",
 	props: {
@@ -43,11 +42,11 @@ export default {
 			mobile: window.innerWidth <= 700,
 			window: {
 				width: 0
-			},
+			}
 		};
 	},
 	computed: {
-		...mapGetters(['setAlbums']),
+		...mapGetters(["setAlbums"])
 	},
 	created() {
 		this.getAlbums();
@@ -58,8 +57,7 @@ export default {
 		window.removeEventListener("resize", this.handleResize);
 	},
 	methods: {
-		...mapActions(['getAlbums']),
-
+		...mapActions(["getAlbums"]),
 		handleResize() {
 			this.window.width = window.innerWidth;
 		}

@@ -1,9 +1,9 @@
 <template>
 	<div class="registration-wrapper">
 		<h1 class="login-title">Registration</h1>
-		<form @submit="setUser(user)">
+		<form @submit.prevent="setUser">
 			<div class="avatar-wrapper">
-				<kit-upload v-model="user.file" :formats="formats" :size="sizeKB" />
+				<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
 
 				<div class="title-inputs">
 					<div class="wrap-input">
@@ -37,13 +37,7 @@
 					</template>
 				</kit-input>
 			</div>
-			<kit-button
-				class="submit"
-				v-model="user"
-			
-				size="large"
-				shape="square"
-			>Sign Up</kit-button>
+			<kit-button class="submit" v-model="user" size="large" shape="square">Sign Up</kit-button>
 		</form>
 	</div>
 </template>
@@ -59,18 +53,21 @@ export default {
 			user: {
 				email: "",
 				name: "",
-				id: '',
+				id: "",
 				surname: "",
-				image:
-					"https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png"
+				image: ""
 			}
 		};
 	},
 	methods: {
 		async setUser() {
-			console.log(this.user);
-			await this.$api.auth.signup(this.user)
-
+			try {
+				await this.$api.auth.signup(this.user);
+				this.status = "success";
+			} catch (e) {
+				console.error(e);
+				this.status = "error";
+			}
 		}
 	}
 };
