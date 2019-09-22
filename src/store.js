@@ -29,7 +29,15 @@ export const store = new Vuex.Store({
 			state.user = data;
 		},
 		favorites(state, data) {
-			state.albums = data;
+			state.albums.forEach((element, index) => {
+				if(element.id === data.id) {
+					state.albums[index] = { ...state.albums[index], favourite: data.favourite };
+					this.$api.albums.put({
+						id: data.id,
+						payload: data,
+					})
+				}
+			});
 		},
 		updateUser(state, payload) {
 			state.user = payload;
@@ -88,7 +96,8 @@ export const store = new Vuex.Store({
 	getters: {
 		isAuth: state => Boolean(state.token),
 		setAlbums: state => state.albums,
-		user: state => state.user
+		user: state => state.user,
+		favourites: state => state.albums.filter(al => al.favourite)
 	}
 });
 

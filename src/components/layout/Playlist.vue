@@ -1,18 +1,34 @@
 <template>
 	<div class="main-wrap">
 		<h1 class="main-title">{{title}}</h1>
-		<div class v-if="window.width > 767">
-			<kit-card :list="setAlbums">
-				<template #favorites>
-					<kit-icon icon="heart" />
-				</template>
-				<template #playlist>
-					<kit-icon icon="bookmark" />
-				</template>
-				<template #remove>
-					<kit-icon icon="trash" />
-				</template>
-			</kit-card>
+		<div class v-if="window.width > 767 && setAlbums.length > 0">
+			<div class="list-wrap" >
+				<kit-card v-for="item in setAlbums" :list="item">
+					<template #favorites>
+						<kit-icon icon="heart" />
+					</template>
+					<template #playlist>
+						<kit-icon icon="bookmark" />
+					</template>
+					<template #remove>
+						<kit-icon icon="trash" />
+					</template>
+				</kit-card>
+			</div>
+			<!--<div class="list-wrap" >-->
+				<!--<kit-card v-for="item in favourites" :list="item">-->
+					<!--<template #favorites>-->
+						<!--<kit-icon icon="heart" />-->
+					<!--</template>-->
+					<!--<template #playlist>-->
+						<!--<kit-icon icon="bookmark" />-->
+					<!--</template>-->
+					<!--<template #remove>-->
+						<!--<kit-icon icon="trash" />-->
+					<!--</template>-->
+				<!--</kit-card>-->
+			<!--</div>-->
+
 		</div>
 
 		<kit-slider-mobile v-else :list="setAlbums">
@@ -46,10 +62,10 @@ export default {
 		};
 	},
 	computed: {
-		...mapGetters(["setAlbums"])
+		...mapGetters(["setAlbums"]),
 	},
-	created() {
-		this.getAlbums();
+	async created() {
+		await this.getAlbums();
 		window.addEventListener("resize", this.handleResize);
 		this.handleResize();
 	},

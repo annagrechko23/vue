@@ -17,16 +17,24 @@ export default {
 			async response => response.data,
 			async error => {
 				if (error.response) {
+					console.log('123');
 					const { status } = error.response;
 					if (status === 401) {
+						console.log('123');
 						await store.dispatch('setLogout');
 					} else if (status === 419) {
+						console.log('123');
 						await store.dispatch('refresh')
-							.then(() => {
-								axios.request(error.config)
+							.then(async () => {
+								// axios.request(error.config)
+								await store.dispatch('getProfile')
+								await store.dispatch('getAlbums')
 							});
+						return
 					}
+					return
 				} else {
+					console.log('123');
 					throw new Error(error.message || 'error.network');
 				}
 			}
@@ -42,8 +50,8 @@ export default {
 				put: data => axios.put('/profile', data)
 			},
 			albums: {
-				get: () => axios.get('/albums/')
-				// get: ({ id }) => axios.get(`/albums/${id}`)
+				get: () => axios.get('/albums'),
+				put: ({ id, payload }) => axios.put(`/albums/${id}`, payload)
 			},
 			auth: {
 				post: () => axios.post('/auth/signin'),

@@ -1,43 +1,41 @@
 <template>
-	<div class="list-wrap">
-		<div class="list-element" v-for="(item, index) in list" :key="index">
+		<div class="list-element" >
 		
 			<div class="media-content">
-				<figure class="image" v-model="item.image" >
-					<img :src="item.image" />
+				<figure class="image" v-model="list.image" >
+					<img :src="list.image" />
 				</figure>
 			</div>
 			<div class="content">
 				<p class="title">
-					<span>{{item.author}}</span>
+					<span>{{list.author}}</span>
 				</p>
-				<span>{{item.description}}</span>
+				<span>{{list.description}}</span>
 			</div>
 			<div class="controls">
 				<ul class="card-controls">
 					<li
 						class="button"
-						:class="{active: item.favourite}"
-						@click="favorites(item.favourite)"
+						:class="{active: list.favourite}"
+						@click="favorites(list.favourite)"
 						v-ripple
 					>
 						<slot name="favorites"></slot>
 					</li>
 					<li
 						class="button"
-						@click="playlist(item)"
-						:class="{activePlaylist: selectedPlaylist.includes(item.id)}"
+						@click="playlist(list)"
+						:class="{activePlaylist: selectedPlaylist.includes(list.id)}"
 						v-ripple
 					>
 						<slot name="playlist"></slot>
 					</li>
-					<li class="trash" @click="remove(item, index)">
+					<li class="trash" @click="remove(list, index)">
 						<slot name="remove"></slot>
 					</li>
 				</ul>
 			</div>
 		</div>
-	</div>
 </template>
 
 <script>
@@ -54,11 +52,9 @@ export default {
 		};
 	},
 	props: {
-		list: { type: Array, default: () => [] }
+		list: { type: Object, default: () => [] }
 	},
-	computed: {
-		...mapGetters([ "getPlaylist"])
-	},
+
 	methods: {
 		...mapActions(["getFavourites", "setPlaylist"]),
 
@@ -68,41 +64,18 @@ export default {
 						description: this.list.description,
 						favourite: selected = !selected,
 						id: this.list.id,
-						image: this.item.image,
+						image: this.list.image,
 						name: this.list.name,
 		})
-				console.log(selected = !selected);
-
-			// this.setFavourites({
-			// 	selected
-			// });
 
 		},
-		playlist(selected) {
-			this.setPlaylist({
-				selected
-			});
-			return this.selectedPlaylist.includes(selected.id)
-				? this.selectedPlaylist.splice(this.selectedPlaylist.indexOf(selected.id), 1)
-				: this.selectedPlaylist.push(selected.id);
-		},
-		remove(item, index) {
-			if (this.list[index] === item) {
-				this.list.splice(index, 1);
-			} else {
-				let found = this.list.indexOf(item);
-				this.list.splice(found, 1);
-			}
-		}
+
 	}
 };
 </script>
 <style lang="scss" scoped>
 .list-wrap {
-	display: grid;
-	grid-template-columns: repeat(5, 19%);
-	grid-gap: 10px;
-	transition: all 0.5s ease;
+
 
 	.list-element {
 		overflow: hidden;
