@@ -30,8 +30,7 @@
 			<!--</div>-->
 
 		</div>
-
-		<kit-slider-mobile v-else :list="setAlbums">
+		<kit-slider-mobile v-else v-for="item in setAlbums" :list="setAlbums">
 			<template #favorites>
 				<kit-icon icon="heart" />
 			</template>

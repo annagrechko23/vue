@@ -9,7 +9,7 @@
 					<div class="content">
 						<p>
 							<strong>{{item.name}}</strong>
-							<span>{{item.handle}}</span>
+							<span>{{item.author}}</span>
 						</p>
 					</div>
 					<div class="controls">
