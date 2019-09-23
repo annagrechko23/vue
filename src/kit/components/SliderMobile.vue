@@ -1,7 +1,7 @@
 <template>
 	<div ref="list" :style="{ width: widthWrapper }">
-		<div class="list-wrap" v-hammer:swipe="onPan">
-			<div class="list-element" v-for="(item, index) in list" :key="item.id">
+		<div class="list-wrap" v-hammer  >
+			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
 					<img :src="item.image" alt="Image" />
 				</figure>
@@ -20,7 +20,7 @@
 							<li class="button" v-ripple>
 								<slot name="playlist"></slot>
 							</li>
-							<li class="trash" @click="remove(item, index)">
+							<li class="trash">
 								<slot name="remove"></slot>
 							</li>
 						</ul>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
 	name: "kit-slider-mobile",
 	props: {
@@ -57,21 +57,8 @@ export default {
 		favorites(selected) {
 			const favourite = (selected.favourite = !selected.favourite);
 			this.getFavourites({
-				author: selected.author,
-				description: selected.description,
 				favourite: favourite,
-				id: selected.id,
-				image: selected.image,
-				name: selected.name
 			});
-		},
-		remove(item, index) {
-			if (this.list[index] === item) {
-				this.list.splice(index, 1);
-			} else {
-				let found = this.list.indexOf(item);
-				this.list.splice(found, 1);
-			}
 		},
 		onPan(e) {
 			const percentage = ((100 / this.count) * e.deltaX) / window.innerWidth;

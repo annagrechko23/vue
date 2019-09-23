@@ -19,7 +19,8 @@ import {
   Icon
 } from "./kit/components";
 import {
-  ripple
+	ripple,
+	hammer
 } from "./kit/directives";
 
 Vue.config.productionTip = false;
@@ -29,7 +30,9 @@ Vue.use(VueHammer);
 
 Vue.use(Axios, { store });
 
-store.$router = router
+store.$router = router;
+
+router.$store = { store };
 
 Vue.use(kit, {
   components: [
@@ -44,7 +47,7 @@ Vue.use(kit, {
     AvatarSelector,
     SliderMobile
   ],
-  directives: [ripple]
+  directives: [ripple, hammer]
 });
 
 

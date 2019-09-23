@@ -1,37 +1,25 @@
 <template>
-	<playlist title="Playlist" :setAlbums="setAlbums"  />
+	<playlist title="Playlist" :setAlbums="setAlbums" />
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from "vuex";
+import { mapActions, mapGetters } from "vuex";
+import Playlist from "../components/layout/Playlist.vue";
 
-import Playlist from "../components/layout/Playlist.vue"
 export default {
 	name: "profile",
 	components: {
-
 		Playlist
 	},
-	data() {
-		return {
-			videos: this.setAlbums
-		}
-	},
 	computed: {
-		...mapGetters(["setAlbums"]),
-		...mapState(['albums'])
+		...mapGetters(["setAlbums", "isAuth"])
 	},
 	async created() {
 		await this.getAlbums();
 	},
 	methods: {
-		...mapActions(["getAlbums"]),
+		...mapActions(["getAlbums"])
 	},
-	watch: {
-  setAlbums() {
-    this.videos = this.setAlbums
-  }
-}
-}
+};
 </script>
 

@@ -1,16 +1,16 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Login</h1>
-		<form @submit.stop="setUser({ email, password })">
+		<form @submit.stop="setUser">
 			<div class="wrap-input">
-				<kit-input type="email" v-model="email" placeholder="Email:">
+				<kit-input type="email" v-model="profile.email" placeholder="Email:">
 					<template #icon>
 						<kit-icon icon="envelope" />
 					</template>
 				</kit-input>
 			</div>
 			<div class="wrap-input">
-				<kit-input type="password" v-model="password" placeholder="Password:">
+				<kit-input type="password" v-model="profile.password" placeholder="Password:">
 					<template #icon>
 						<kit-icon icon="key" />
 					</template>
@@ -29,19 +29,17 @@ export default {
 	data() {
 		return {
 			profile: {
-				name: '',
-				surnname: '',
-				email: '',
-				image: '',
-				id: '',
+				name: "",
+				surnname: "",
+				email: "",
+				image: "",
+				id: ""
 			}
-		
 		};
 	},
 	methods: {
 		...mapActions(["login"]),
-	async	setUser() {
-		console.log(this.profile)
+		async setUser() {
 			await this.login(this.profile);
 		}
 	}

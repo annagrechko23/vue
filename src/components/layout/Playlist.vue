@@ -57,6 +57,7 @@ export default {
 	destroyed() {
 		window.removeEventListener("resize", this.handleResize);
 	},
+	
 	methods: {
 		handleResize() {
 			this.window.width = window.innerWidth;

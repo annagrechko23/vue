@@ -1,7 +1,7 @@
 <template>
 	<div class="list-element">
 		<div class="media-content">
-			<figure class="image" v-model="list.image">
+			<figure class="image">
 				<img :src="list.image" />
 			</figure>
 		</div>
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
 	name: "kit-card",
@@ -57,14 +57,6 @@ export default {
 				name: this.list.name
 			});
 		},
-		remove(item, index) {
-			console.log(item.id, index);
-			if (this.list === item.id) {
-				this.list.splice(index, 1);
-			} else {
-				this.list.splice(item, 1);
-			}
-		}
 	}
 };
 </script>
