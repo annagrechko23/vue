@@ -1,7 +1,7 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Login</h1>
-		<form @submit.prevent="login({ email, password })">
+		<form @submit.stop="setUser({ email, password })">
 			<div class="wrap-input">
 				<kit-input type="email" v-model="email" placeholder="Email:">
 					<template #icon>
@@ -28,20 +28,21 @@ export default {
 	name: "login",
 	data() {
 		return {
-			password: "",
-			email: ""
+			profile: {
+				name: '',
+				surnname: '',
+				email: '',
+				image: '',
+				id: '',
+			}
+		
 		};
 	},
 	methods: {
-		...mapActions(["setEmail", "setLogin"]),
-		login() {
-			this.setEmail({ email: this.email });
-			this.setLogin({
-				email: this.email,
-				password: this.password
-			}).then(() => {
-				this.$router.push("/");
-			});
+		...mapActions(["login"]),
+	async	setUser() {
+		console.log(this.profile)
+			await this.login(this.profile);
 		}
 	}
 };

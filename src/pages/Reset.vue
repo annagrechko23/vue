@@ -1,21 +1,20 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Change Email</h1>
-		<form>
+		<form @submit="save">
 			<div class="wrap-input">
-				
-				<kit-input type="email" v-model="email" placeholder="Current Email:">
+				<kit-input type="email" v-model="user.email" required placeholder="Current Email:">
 					<template #icon>
 						<kit-icon icon="envelope" />
-						</template>
-			</kit-input>
+					</template>
+				</kit-input>
 			</div>
 			<div class="wrap-input">
-				<kit-input type="email" v-model="newEmail" placeholder="New Email:">
-							<template #icon>
+				<kit-input type="email" v-model="user.newEmail" required placeholder="New Email:">
+					<template #icon>
 						<kit-icon icon="envelope" />
-						</template>
-						</kit-input>
+					</template>
+				</kit-input>
 			</div>
 			<kit-button class="submit" size="large" shape="square">Change</kit-button>
 		</form>
@@ -23,16 +22,30 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
 	name: "reset",
-	data() {
-		return{
-			password: '',
-			newEmail: ''
-
+	computed: {
+		...mapGetters(["user"])
+	},
+	created() {
+		this.getProfile();
+	},
+	methods: {
+		...mapActions(["getProfile", "changeEmail"]),
+		save() {
+			let profile = {
+				name: this.user.name,
+				surnname: this.user.surnname,
+				email: this.user.newEmail,
+				image: this.user.image,
+				id: this.user.id
+			};
+			this.changeEmail(profile);
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -50,6 +63,5 @@ export default {
 .login-wrapper {
 	max-width: 600px;
 	margin: 100px auto;
-
 }
 </style>

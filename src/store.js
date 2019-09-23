@@ -1,113 +1,105 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import axios from 'axios';
-
-
-const instance = axios.create({
-	baseURL: 'http://localhost:4000/api',
-	headers: {
-		'Accept': 'application/json',
-		'Content-Type': 'application/json',
-		'authorization': localStorage.getItem("token")
-	}
-});
+import Vue from "vue";
+import Vuex from 'vuex';
 
 Vue.use(Vuex);
+export const store = new Vuex.Store({
+	state: {
+		token: window.$cookies.get("token"),
+		favourites: [],
+		playlist: [],
+		albums: [],
+		profile: [],
+		user: {
+			email: '',
+			id: '',
+			image: '',
+			name: '',
+			surnname: ''
+		}
+	},
 
-const LOGIN = "LOGIN";
-const SET_EMAIL = "SET_EMAIL";
-const LOGIN_SUCCESS = "LOGIN_SUCCESS";
-const SET_FAVORITES = "SET_FAVORITES";
-const SET_PLAYLIST = "SET_PLAYLIST";
-const LOGOUT = "LOGOUT";
-const SET_ALBUMS = "SET_ALBUMS";
-
-
-const state = {
-	isLoggedIn: !!localStorage.getItem("token"),
-	email: '',
-	favourites: [],
-	playlist: [],
-	albums: [],
-}
-
-const mutations = {
-	[LOGIN](state) {
-		state.pending = true;
-	},
-	[SET_EMAIL](state, action) {
-		state.email = action;
-	},
-	[SET_ALBUMS](state, action) {
-		state.albums = action;
-	},
-	[SET_FAVORITES](state, action) {
-		state.favourites.push(action);
-	},
-	[SET_PLAYLIST](state, action) {
-		state.playlist.push(action);
-	},
-	[LOGIN_SUCCESS](state, action) {
-		state.isLoggedIn = true;
-		state.email = action;
-		state.pending = false;
-	},
-	[LOGOUT](state) {
-		state.isLoggedIn = false;
-	},
-}
-
-
-const actions = {
-	setEmail({ commit }, event) {
-		commit(SET_EMAIL, event);
-	},
-	setAlbums({ commit }) {
-		instance.get('/albums/')
-			.then(function (response) {
-				commit(SET_ALBUMS, response.data);
-			})
-			.catch(function (error) {
-				console.error(error);
+	mutations: {
+		login(state) {
+			state.pending = true;
+		},
+		setAlbums(state, data) {
+			state.albums = data ? data : [];
+		},
+		setUser(state, data) {
+			state.user = data;
+		},
+		favorites(state, data) {
+			state.albums = state.albums.map((element, index) => {
+				if (element.id === data.id) {
+					this.$api.albums.put({
+						id: data.id,
+						payload: data,
+					})
+					return { ...state.albums[index], favourite: data.favourite };
+				}
+				return element
 			});
+		},
+		updateUser(state, payload) {
+			state.user = payload;
+		},
+		setToken(state, data) {
+			state.token = data;
+		},
+		loginSuccess(state, action) {
+			state.token = true;
+			state.email = action;
+			state.pending = false;
+		},
+		logout(state) {
+			state.token = false;
+		},
 	},
-	setFavourites({ commit }, event) {
-		commit(SET_FAVORITES, event);
-	},
-	setPlaylist({ commit }, event) {
-		commit(SET_PLAYLIST, event);
-	},
-	async setLogin({ commit }, creds) {
-		commit(LOGIN);
-		await instance.post('/auth/signin')
-			.then(function (response) {
-				const { token } = response.data;
 
-				localStorage.setItem("token", token);
-				commit(LOGIN_SUCCESS);
-			})
-			.catch(function (error) {
-				console.error(error);
-			});
+	actions: {
+		async getAlbums({ commit }) {
+			const data = await this.$api.albums.get();
+			if (!data) return;
+			commit('setAlbums', data);
+		},
+		async getProfile({ commit }) {
+			const data = await this.$api.profile.get();
+			if (!data) return;
+			commit('setUser', data);
+		},
+		async updateProfile({ commit }, payload) {
+			await this.$api.profile.put(payload);
+			commit('updateUser', payload);
+		},
+		async login({ commit }) {
+			commit('login');
+			const data = await this.$api.auth.post();
+			commit('setToken', data.token);
+			this.$router.push("/playlist");
+		},
+		async refresh({ commit }) {
+			const data = await this.$api.auth.patch();
+			commit('setToken', data.token);
+		},
+		async changeEmail({ commit }, payload) {
+			await this.$api.profile.put(payload);
+			commit('updateUser', payload);
+		},
+		async getFavourites({ commit }, payload) {
+			console.log(payload);
+			commit('favorites', payload);
+		},
+		async setLogout({ commit }) {
+			await this.$api.auth.post()
+			window.$cookies.remove('token');
+			commit('logout');
+		}
 	},
-	logout({ commit }) {
-		localStorage.removeItem("token");
-		commit(LOGOUT);
+	getters: {
+		isAuth: state => Boolean(state.token),
+		setAlbums: state => state.albums,
+		user: state => state.user,
+		favourites: state => state.albums.filter(al => al.favourite)
 	}
-}
-
-const getters = {
-	isLoggedIn: state => state.isLoggedIn,
-	getEmail: state => state.email,
-	getFavourites: state => state.favourites,
-	getPlaylist: state => state.playlist,
-	getAlbums: state => state.albums,
-}
-
-export default new Vuex.Store({
-	state,
-	getters,
-	actions,
-	mutations
-})
+});
 

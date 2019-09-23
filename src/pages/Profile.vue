@@ -3,20 +3,20 @@
 		<tabs>
 			<tab name="Info" :selected="true">
 				<div class="registration-wrapper">
-					<form>
+					<form @submit="save">
 						<div class="avatar-wrapper">
-							<kit-upload v-model="file" :formats="formats" :size="sizeKB" />
+							<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
 
 							<div class="title-inputs">
 								<div class="wrap-input">
-									<kit-input type="text" v-model="firstName" placeholder="First Name:">
+									<kit-input type="text" v-model="user.name" placeholder="First Name:">
 										<template #icon>
 											<kit-icon icon="user" />
 										</template>
 									</kit-input>
 								</div>
 								<div class="wrap-input">
-									<kit-input type="text" v-model="lastName" placeholder="Last Name:">
+									<kit-input type="text" v-model="user.surnname" placeholder="Last Name:">
 										<template #icon>
 											<kit-icon icon="user" />
 										</template>
@@ -26,7 +26,7 @@
 						</div>
 
 						<div class="wrap-input">
-							<kit-input type="email" v-model="email" disabled placeholder="Email:">
+							<kit-input type="email" v-model="user.email" disabled placeholder="Email:">
 								<template #icon>
 									<kit-icon icon="envelope" />
 								</template>
@@ -37,14 +37,14 @@
 				</div>
 			</tab>
 			<tab name="Favorites">
-				<playlist title="Your Favourite" />
+				<playlist :setAlbums="favourites" title="Your Favourite" />
 			</tab>
 		</tabs>
 	</div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import Tab from "../components/layout/Tab.vue";
 import Tabs from "../components/layout/Tabs.vue";
 import Playlist from "../components/layout/Playlist.vue";
@@ -55,21 +55,31 @@ export default {
 		Tabs,
 		Playlist
 	},
-	computed: {
-		...mapGetters(["isLoggedIn", "getEmail"])
-	},
 	data() {
 		return {
-			password: "",
-			email: "",
-			firstName: "",
-			file: null,
 			formats: ["image/jpg", "image/jpeg", "image/png"],
-			sizeKB: 700,
-			lastName: "",
-			src:
-				"https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png"
+			sizeKB: 700
 		};
+	},
+	async created() {
+		await this.getProfile();
+		await this.getAlbums();
+	},
+	computed: {
+		...mapGetters(["isAuth", "user", "favourites"])
+	},
+	methods: {
+		...mapActions(["getProfile", "updateProfile", "getAlbums"]),
+		save() {
+			let profile = {
+				name: this.user.name,
+				surnname: this.user.surnname,
+				email: this.user.email,
+				image: this.user.image,
+				id: this.user.id
+			};
+			this.updateProfile(profile);
+		}
 	}
 };
 </script>
@@ -86,10 +96,6 @@ export default {
 	display: block;
 }
 
-.registration-wrapper {
-	max-width: 600px;
-	margin: 50px auto;
-}
 .avatar-wrapper {
 	display: flex;
 	align-items: center;
@@ -98,7 +104,5 @@ export default {
 .avatar-container {
 	width: 30%;
 }
-.title-inputs {
-	width: 60%;
-}
+
 </style>

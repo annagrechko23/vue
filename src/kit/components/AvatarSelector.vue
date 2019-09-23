@@ -47,6 +47,10 @@ export default {
 	display: flex;
 	width: 30%;
 	margin-bottom: 3px;
+	@media only screen and (max-width: 767px) {
+		width: 100%;
+		display: block;
+	}
 }
 
 .avatar-default {

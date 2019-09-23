@@ -1,16 +1,20 @@
-
+import Vue from "vue";
+import VueRouter from "vue-router";
 import Profile from "@/pages/Profile";
 import Login from "@/pages/Login";
 import Registration from "@/pages/Registration";
 import Reset from "@/pages/Reset";
 import Playlist from "@/pages/Playlist";
 
-const routes = [
+Vue.use(VueRouter);
+const router = new VueRouter({
+	routes: [
 	{
 		path: '/',
-		redirect: '/playlist',
+		redirect: '/login',
 	},
   {
+    name: "/root",
     path: "/profile",
     component: Profile,
 	},
@@ -19,6 +23,7 @@ const routes = [
     component: Reset
   },
 	{
+		name: "login",
     path: "/login",
     component: Login
   },
@@ -30,6 +35,7 @@ const routes = [
     path: "/playlist",
     component: Playlist
   }
-];
+]
+})
 
-export default routes;
+export default router;

@@ -1,7 +1,7 @@
 module.exports = [
   {
     id: 1,
-    favourite: false,
+    favourite: true,
     image: 'https://consequenceofsound.net/wp-content/uploads/2013/07/jayz_magnacartaholygrail_608x608.jpg?quality=80&w=608',
     author: 'Jay Z',
     name: 'Magna Carta Holy Grail',

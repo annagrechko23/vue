@@ -1,46 +1,43 @@
 <template>
 	<div class="registration-wrapper">
 		<h1 class="login-title">Registration</h1>
-		<form>
-		<div class="avatar-wrapper	">
-	<kit-upload v-model="file" :formats="formats" :size="sizeKB" />
-		
+		<form @submit.prevent="setUser">
+			<div class="avatar-wrapper">
+				<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
+
 				<div class="title-inputs">
-						<div class="wrap-input">
-				
-				<kit-input type="text" v-model="firstName" placeholder="First Name:">
-					<template #icon>
-						<kit-icon icon="user" />
-						</template>
-			</kit-input>
-			</div>
-			<div class="wrap-input">
-				<kit-input type="text" v-model="lastName" placeholder="Last Name:">
+					<div class="wrap-input">
+						<kit-input type="text" v-model="user.name" placeholder="First Name:">
 							<template #icon>
-						<kit-icon icon="user" />
-						</template>
+								<kit-icon icon="user" />
+							</template>
 						</kit-input>
+					</div>
+					<div class="wrap-input">
+						<kit-input type="text" v-model="user.surname" placeholder="Last Name:">
+							<template #icon>
+								<kit-icon icon="user" />
+							</template>
+						</kit-input>
+					</div>
+				</div>
 			</div>
-			</div>
-		</div>
-					
-		
+
 			<div class="wrap-input">
-				
-				<kit-input type="email" v-model="email" placeholder="Email:">
+				<kit-input type="email" v-model="user.email" placeholder="Email:">
 					<template #icon>
 						<kit-icon icon="envelope" />
-						</template>
-			</kit-input>
+					</template>
+				</kit-input>
 			</div>
 			<div class="wrap-input">
-				<kit-input type="password" v-model="password" placeholder="Password:">
-							<template #icon>
+				<kit-input type="password" v-model="user.password" placeholder="Password:">
+					<template #icon>
 						<kit-icon icon="key" />
-						</template>
-						</kit-input>
+					</template>
+				</kit-input>
 			</div>
-			<kit-button class="submit" size="large" shape="square">Sign Up</kit-button>
+			<kit-button class="submit" v-model="user" size="large" shape="square">Sign Up</kit-button>
 		</form>
 	</div>
 </template>
@@ -49,18 +46,31 @@
 export default {
 	name: "registration",
 	data() {
-		return{
-			password: '',
-			email: '',
-			firstName: '',
-			file: null,
-      formats: ['image/jpg', 'image/jpeg', 'image/png'],
-      sizeKB: 700,
-			lastName: '',
-			src: 'https://www.gstatic.com/youtube/media/ytm/images/pbg/liked-songs-@288.png'
+		return {
+			formats: ["image/jpg", "image/jpeg", "image/png"],
+			sizeKB: 700,
+
+			user: {
+				email: "",
+				name: "",
+				id: "",
+				surname: "",
+				image: ""
+			}
+		};
+	},
+	methods: {
+		async setUser() {
+			try {
+				await this.$api.auth.signup(this.user);
+				this.status = "success";
+			} catch (e) {
+				console.error(e);
+				this.status = "error";
+			}
 		}
 	}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -74,21 +84,13 @@ export default {
 	width: 100%;
 	display: block;
 }
-
-.registration-wrapper {
-	max-width: 600px;
-	margin: 50px auto;
-}
-.avatar-wrapper{
+.avatar-wrapper {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
-.avatar-container{
+.avatar-container {
 	width: 30%;
-}
-.title-inputs{
-	width: 60%;
 }
 
 </style>
