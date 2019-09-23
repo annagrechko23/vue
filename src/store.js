@@ -23,20 +23,21 @@ export const store = new Vuex.Store({
 			state.pending = true;
 		},
 		setAlbums(state, data) {
-			state.albums = data;
+			state.albums = data ? data : [];
 		},
 		setUser(state, data) {
 			state.user = data;
 		},
 		favorites(state, data) {
-			state.albums.forEach((element, index) => {
-				if(element.id === data.id) {
-					state.albums[index] = { ...state.albums[index], favourite: data.favourite };
+			state.albums = state.albums.map((element, index) => {
+				if (element.id === data.id) {
 					this.$api.albums.put({
 						id: data.id,
 						payload: data,
 					})
+					return { ...state.albums[index], favourite: data.favourite };
 				}
+				return element
 			});
 		},
 		updateUser(state, payload) {
@@ -58,10 +59,12 @@ export const store = new Vuex.Store({
 	actions: {
 		async getAlbums({ commit }) {
 			const data = await this.$api.albums.get();
+			if (!data) return;
 			commit('setAlbums', data);
 		},
 		async getProfile({ commit }) {
 			const data = await this.$api.profile.get();
+			if (!data) return;
 			commit('setUser', data);
 		},
 		async updateProfile({ commit }, payload) {
@@ -74,17 +77,16 @@ export const store = new Vuex.Store({
 			commit('setToken', data.token);
 			this.$router.push("/playlist");
 		},
-		async refresh({ commit}) {
+		async refresh({ commit }) {
 			const data = await this.$api.auth.patch();
 			commit('setToken', data.token);
 		},
-		async changeEmail({ commit}, payload) {
+		async changeEmail({ commit }, payload) {
 			await this.$api.profile.put(payload);
 			commit('updateUser', payload);
 		},
-		async getFavourites({ commit}, payload) {
-			console.log(payload)
-			// await this.$api.profile.put(payload);
+		async getFavourites({ commit }, payload) {
+			console.log(payload);
 			commit('favorites', payload);
 		},
 		async setLogout({ commit }) {

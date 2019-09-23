@@ -37,7 +37,7 @@
 				</div>
 			</tab>
 			<tab name="Favorites">
-				<playlist title="Your Favourite" />
+				<playlist :setAlbums="favourites" title="Your Favourite" />
 			</tab>
 		</tabs>
 	</div>
@@ -61,14 +61,15 @@ export default {
 			sizeKB: 700
 		};
 	},
-	created() {
-		this.getProfile();
+	async created() {
+		await this.getProfile();
+		await this.getAlbums();
 	},
 	computed: {
-		...mapGetters(["isAuth", "user"])
+		...mapGetters(["isAuth", "user", "favourites"])
 	},
 	methods: {
-		...mapActions(["getProfile", "updateProfile"]),
+		...mapActions(["getProfile", "updateProfile", "getAlbums"]),
 		save() {
 			let profile = {
 				name: this.user.name,
@@ -95,10 +96,6 @@ export default {
 	display: block;
 }
 
-.registration-wrapper {
-	max-width: 600px;
-	margin: 50px auto;
-}
 .avatar-wrapper {
 	display: flex;
 	align-items: center;
@@ -107,7 +104,5 @@ export default {
 .avatar-container {
 	width: 30%;
 }
-.title-inputs {
-	width: 60%;
-}
+
 </style>

@@ -1,7 +1,7 @@
 <template>
-	<div ref="list">
-		<div class="list-wrap" v-hammer:swipe="onPan" :style="{ width: widthWrapper }">
-			<div class="list-element" v-for="item in list" :key="item.id">
+	<div ref="list" :style="{ width: widthWrapper }">
+		<div class="list-wrap" v-hammer:swipe="onPan">
+			<div class="list-element" v-for="(item, index) in list" :key="item.id">
 				<figure class="image">
 					<img :src="item.image" alt="Image" />
 				</figure>
@@ -13,28 +13,18 @@
 						</p>
 					</div>
 					<div class="controls">
-				<ul class="card-controls">
-					<li
-						class="button"
-						:class="{active: selected.includes(item.id)}"
-						@click="favorites(item)"
-						v-ripple
-					>
-						<slot name="favorites"></slot>
-					</li>
-					<li
-						class="button"
-						@click="playlist(item)"
-						:class="{activePlaylist: selectedPlaylist.includes(item.id)}"
-						v-ripple
-					>
-						<slot name="playlist"></slot>
-					</li>
-					<li class="trash" @click="remove(item, index)">
-						<slot name="remove"></slot>
-					</li>
-				</ul>
-			</div>
+						<ul class="card-controls">
+							<li class="button" :class="{active: item.favourite}" @click="favorites(item)" v-ripple>
+								<slot name="favorites"></slot>
+							</li>
+							<li class="button" v-ripple>
+								<slot name="playlist"></slot>
+							</li>
+							<li class="trash" @click="remove(item, index)">
+								<slot name="remove"></slot>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -46,45 +36,34 @@ import { mapActions, mapGetters } from "vuex";
 export default {
 	name: "kit-slider-mobile",
 	props: {
-		list: Array
+		list: { type: Array, default: () => [] }
 	},
 	data() {
 		return {
-			activeSlide: 0,
-						active: false,
-			selected: [],
-			selectedPlaylist: [],
-			activePlaylist: false
+			activeSlide: 0
 		};
 	},
 	computed: {
-				...mapGetters(["getFavourites", "getPlaylist"]),
 		count() {
 			return this.list.length;
+		},
+		widthWrapper() {
+			return `${this.count * 100}%`;
 		}
 	},
-	mounted() {
-		this.widthWrapper();
-	},
-	methods: {
-		...mapActions(["setFavourites", "setPlaylist"]),
 
+	methods: {
+		...mapActions(["getFavourites"]),
 		favorites(selected) {
-			this.selected;
-			this.setFavourites({
-				selected
+			const favourite = (selected.favourite = !selected.favourite);
+			this.getFavourites({
+				author: selected.author,
+				description: selected.description,
+				favourite: favourite,
+				id: selected.id,
+				image: selected.image,
+				name: selected.name
 			});
-			return this.selected.includes(selected.id)
-				? this.selected.splice(this.selected.indexOf(selected.id), 1)
-				: this.selected.push(selected.id);
-		},
-		playlist(selected) {
-			this.setPlaylist({
-				selected
-			});
-			return this.selectedPlaylist.includes(selected.id)
-				? this.selectedPlaylist.splice(this.selectedPlaylist.indexOf(selected.id), 1)
-				: this.selectedPlaylist.push(selected.id);
 		},
 		remove(item, index) {
 			if (this.list[index] === item) {
@@ -107,9 +86,6 @@ export default {
 					this.goToSlide(this.activeSlide);
 				}
 			}
-		},
-		widthWrapper() {
-			this.$refs.list.style.width = `${this.count * 100}%`;
 		},
 		goToSlide(number) {
 			if (number < 0) {

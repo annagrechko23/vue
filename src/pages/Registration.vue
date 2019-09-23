@@ -84,11 +84,6 @@ export default {
 	width: 100%;
 	display: block;
 }
-
-.registration-wrapper {
-	max-width: 600px;
-	margin: 50px auto;
-}
 .avatar-wrapper {
 	display: flex;
 	align-items: center;
@@ -97,7 +92,5 @@ export default {
 .avatar-container {
 	width: 30%;
 }
-.title-inputs {
-	width: 60%;
-}
+
 </style>

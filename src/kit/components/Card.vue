@@ -1,41 +1,35 @@
 <template>
-		<div class="list-element" >
-		
-			<div class="media-content">
-				<figure class="image" v-model="list.image" >
-					<img :src="list.image" />
-				</figure>
-			</div>
-			<div class="content">
-				<p class="title">
-					<span>{{list.author}}</span>
-				</p>
-				<span>{{list.description}}</span>
-			</div>
-			<div class="controls">
-				<ul class="card-controls">
-					<li
-						class="button"
-						:class="{active: list.favourite}"
-						@click="favorites(list.favourite)"
-						v-ripple
-					>
-						<slot name="favorites"></slot>
-					</li>
-					<li
-						class="button"
-						@click="playlist(list)"
-						:class="{activePlaylist: selectedPlaylist.includes(list.id)}"
-						v-ripple
-					>
-						<slot name="playlist"></slot>
-					</li>
-					<li class="trash" @click="remove(list, index)">
-						<slot name="remove"></slot>
-					</li>
-				</ul>
-			</div>
+	<div class="list-element">
+		<div class="media-content">
+			<figure class="image" v-model="list.image">
+				<img :src="list.image" />
+			</figure>
 		</div>
+		<div class="content">
+			<p class="title">
+				<span>{{list.author}}</span>
+			</p>
+			<span>{{list.description}}</span>
+		</div>
+		<div class="controls">
+			<ul class="card-controls">
+				<li
+					class="button"
+					:class="{active: list.favourite}"
+					@click="favorites(list.favourite)"
+					v-ripple
+				>
+					<slot name="favorites"></slot>
+				</li>
+				<li class="button" v-ripple>
+					<slot name="playlist"></slot>
+				</li>
+				<li class="trash" @click="remove(list, list.id)">
+					<slot name="remove"></slot>
+				</li>
+			</ul>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -44,39 +38,38 @@ import { mapActions, mapGetters } from "vuex";
 export default {
 	name: "kit-card",
 	data() {
-		return {
-			active: false,
-			selected: [],
-			selectedPlaylist: [],
-			activePlaylist: false
-		};
+		return {};
 	},
 	props: {
-		list: { type: Object, default: () => [] }
+		list: { type: Object, default: () => {} }
 	},
 
 	methods: {
-		...mapActions(["getFavourites", "setPlaylist"]),
-
+		...mapActions(["getFavourites"]),
 		favorites(selected) {
+			const favourite = (selected = !selected);
 			this.getFavourites({
-						author: this.list.author,
-						description: this.list.description,
-						favourite: selected = !selected,
-						id: this.list.id,
-						image: this.list.image,
-						name: this.list.name,
-		})
-
+				author: this.list.author,
+				description: this.list.description,
+				favourite: favourite,
+				id: this.list.id,
+				image: this.list.image,
+				name: this.list.name
+			});
 		},
-
+		remove(item, index) {
+			console.log(item.id, index);
+			if (this.list === item.id) {
+				this.list.splice(index, 1);
+			} else {
+				this.list.splice(item, 1);
+			}
+		}
 	}
 };
 </script>
 <style lang="scss" scoped>
 .list-wrap {
-
-
 	.list-element {
 		overflow: hidden;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -99,6 +92,4 @@ export default {
 		grid-gap: 1vw;
 	}
 }
-
-
 </style>
