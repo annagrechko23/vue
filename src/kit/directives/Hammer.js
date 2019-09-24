@@ -1,76 +1,4 @@
 
- function getModifierDirections (mod) {
-  let dir = {}
-
-  directions.forEach(direction => {
-    if (mod[direction]) {
-      dir[direction] = true
-    }
-  })
-
-  if (Object.keys(dir).length === 0) {
-    return modifiersAll
-  }
-
-  if (dir.horizontal === true) {
-    dir.left = dir.right = true
-  }
-  if (dir.vertical === true) {
-    dir.up = dir.down = true
-  }
-  if (dir.left === true && dir.right === true) {
-    dir.horizontal = true
-  }
-  if (dir.up === true && dir.down === true) {
-    dir.vertical = true
-  }
-  if (dir.horizontal === true && dir.vertical === true) {
-    dir.all = true
-  }
-
-  return dir
-}
-
- function updateModifiers (ctx, { oldValue, value, modifiers }) {
-  if (oldValue !== value) {
-    ctx.handler = value
-  }
-
-  if (directions.some(direction => modifiers[direction] !== ctx.modifiers[direction])) {
-    ctx.modifiers = modifiers
-    ctx.direction = getModifierDirections(modifiers)
-  }
-}
-
- function setObserver (el, evt, ctx) {
-  const target = evt.target
-  ctx.touchTargetObserver = new MutationObserver(() => {
-    el.contains(target) === false && ctx.end(evt)
-  })
-  ctx.touchTargetObserver.observe(el, { childList: true, subtree: true })
-}
-
- function removeObserver (ctx) {
-  if (ctx.touchTargetObserver !== void 0) {
-    ctx.touchTargetObserver.disconnect()
-    ctx.touchTargetObserver = void 0
-  }
-}
-function parseArg (arg) {
-  // delta (min velocity -- dist / time)
-  // mobile min distance on first move
-  // desktop min distance until deciding if it's a swipe or not
-  const data = [0.06, 6, 50]
-
-  if (typeof arg === 'string' && arg.length) {
-    arg.split(':').forEach((val, index) => {
-      const v = parseFloat(val)
-      v && (data[index] = v)
-    })
-  }
-
-  return data
-}
 
 export default {
   name: 'hammer',
@@ -78,10 +6,8 @@ export default {
   bind (el, { value, arg, modifiers }) {
     if (el.__qtouchswipe) {
       el.__qtouchswipe_old = el.__qtouchswipe
-    }
-
-    // early return, we don't need to do anything
- 
+		}
+		console.log(el, { value, arg, modifiers })
 
     let ctx = {
       handler: value,
