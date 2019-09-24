@@ -1,12 +1,13 @@
 <template>
 	<div ref="list" :style="{ width: widthWrapper }">
-		<div class="list-wrap" v-hammer  >
+		<div class="list-wrap" v-swipe="onPan" >
 			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
 					<img :src="item.image" alt="Image" />
 				</figure>
 				<div class="media-content">
 					<div class="content">
+
 						<p>
 							<strong>{{item.name}}</strong>
 							<span>{{item.author}}</span>
@@ -44,7 +45,7 @@ export default {
 		};
 	},
 	computed: {
-		count() {
+	 count() {
 			return this.list.length;
 		},
 		widthWrapper() {
@@ -61,6 +62,7 @@ export default {
 			});
 		},
 		onPan(e) {
+			console.log(e)
 			const percentage = ((100 / this.count) * e.deltaX) / window.innerWidth;
 			const transform = percentage - (100 / this.count) * this.activeSlide;
 			this.$refs.list.style.transform = `translateX(${transform}%)`;

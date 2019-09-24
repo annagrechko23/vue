@@ -20,7 +20,7 @@ import {
 } from "./kit/components";
 import {
 	ripple,
-	hammer
+	swipe
 } from "./kit/directives";
 
 Vue.config.productionTip = false;
@@ -47,7 +47,7 @@ Vue.use(kit, {
     AvatarSelector,
     SliderMobile
   ],
-  directives: [ripple, hammer]
+  directives: [ripple, swipe]
 });
 
 

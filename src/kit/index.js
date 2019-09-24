@@ -10,7 +10,7 @@ import {
     SliderMobile
 } from "./components";
 import {
-    ripple
+    ripple, swipe
 } from "./directives";
 
 export default {
