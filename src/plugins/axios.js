@@ -21,12 +21,8 @@ export default {
 					if (status === 401) {
 						await store.dispatch('setLogout');
 					} else if (status === 419) {
-						await store.dispatch('refresh')
-							.then(() => {
-								// axios.request(error.config)
-								store.dispatch('getProfile')
-								store.dispatch('getAlbums')
-							});
+						return store.dispatch('refresh')
+							.then(() => axios.request(error.config));
 					}
 				} else {
 					throw new Error(error.message || 'error.network');
