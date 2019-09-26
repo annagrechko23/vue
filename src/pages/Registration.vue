@@ -65,7 +65,6 @@ export default {
 				await this.$api.auth.signup(this.user);
 				this.status = "success";
 			} catch (e) {
-				console.error(e);
 				this.status = "error";
 			}
 		}

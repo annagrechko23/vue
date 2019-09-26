@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
-import { VueHammer } from "vue2-hammer";
 import VueCookies from 'vue-cookies'
+import 'hammerjs';
 import { store } from "./store";
 import Axios from "./plugins/axios";
 import router from "./routes";
@@ -26,8 +26,6 @@ import {
 Vue.config.productionTip = false;
 
 Vue.use(VueCookies);
-Vue.use(VueHammer);
-
 Vue.use(Axios, { store });
 
 store.$router = router;
