@@ -29,11 +29,6 @@ export default {
 				}
 			}
 		);
-		store.subscribe((mutation) => {
-			if (mutation.type === 'setToken') {
-				window.$cookies.set('token', mutation.payload);
-			}
-		});
 		const api = {
 			profile: {
 				get: () => axios.get('/profile'),

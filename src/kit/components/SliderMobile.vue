@@ -98,7 +98,7 @@ export default {
 
 <style lang="scss" scoped>
 .slide-wrap {
-	transition: transform 100ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
+	// transition: transform 100ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
 }
 .list-wrap {
 	display: grid;

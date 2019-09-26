@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
+
 export const store = new Vuex.Store({
 	state: {
 		token: window.$cookies.get("token"),
@@ -101,4 +102,9 @@ export const store = new Vuex.Store({
 		favourites: state => state.albums.filter(al => al.favourite)
 	},
 
+});
+store.subscribe((mutation) => {
+	if (mutation.type === 'setToken') {
+		window.$cookies.set('token', mutation.payload);
+	}
 });

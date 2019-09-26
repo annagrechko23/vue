@@ -23,6 +23,7 @@ export default {
             });
         } else {
             Vue.directive(ripple.name, ripple);
+            Vue.directive(ripple.name, swipe);
         }
         if (components.length) {
             components.forEach(Component => {

@@ -51,6 +51,6 @@ Vue.use(kit, {
 
 new Vue({
   router,
-  store,
+	store,
   render: h => h(App)
 }).$mount("#app");
