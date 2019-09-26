@@ -23,7 +23,7 @@ export const store = new Vuex.Store({
 			state.pending = true;
 		},
 		setAlbums(state, data) {
-			state.albums = data ? data : [];
+			state.albums = data;
 		},
 		setUser(state, data) {
 			state.user = data;
@@ -86,7 +86,6 @@ export const store = new Vuex.Store({
 			commit('updateUser', payload);
 		},
 		async getFavourites({ commit }, payload) {
-			console.log(payload);
 			commit('favorites', payload);
 		},
 		async setLogout({ commit }) {
@@ -100,6 +99,6 @@ export const store = new Vuex.Store({
 		setAlbums: state => state.albums,
 		user: state => state.user,
 		favourites: state => state.albums.filter(al => al.favourite)
-	}
-});
+	},
 
+});

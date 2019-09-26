@@ -1,7 +1,7 @@
 import Vue from "vue";
 import App from "./App.vue";
-import { VueHammer } from "vue2-hammer";
 import VueCookies from 'vue-cookies'
+import 'hammerjs';
 import { store } from "./store";
 import Axios from "./plugins/axios";
 import router from "./routes";
@@ -19,17 +19,18 @@ import {
   Icon
 } from "./kit/components";
 import {
-  ripple
+	ripple,
+	swipe
 } from "./kit/directives";
 
 Vue.config.productionTip = false;
 
 Vue.use(VueCookies);
-Vue.use(VueHammer);
-
 Vue.use(Axios, { store });
 
-store.$router = router
+store.$router = router;
+
+router.$store = { store };
 
 Vue.use(kit, {
   components: [
@@ -44,7 +45,7 @@ Vue.use(kit, {
     AvatarSelector,
     SliderMobile
   ],
-  directives: [ripple]
+  directives: [ripple, swipe]
 });
 
 

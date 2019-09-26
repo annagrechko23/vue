@@ -1,7 +1,7 @@
 <template>
-	<div ref="list" :style="{ width: widthWrapper }">
-		<div class="list-wrap" v-hammer:swipe="onPan">
-			<div class="list-element" v-for="(item, index) in list" :key="item.id">
+	<div class="slide-wrap" ref="list" :style="{ width: widthWrapper }">
+		<div class="list-wrap" v-swipe="onPan">
+			<div class="list-element" v-for="item in list" :key="item.id">
 				<figure class="image">
 					<img :src="item.image" alt="Image" />
 				</figure>
@@ -20,7 +20,7 @@
 							<li class="button" v-ripple>
 								<slot name="playlist"></slot>
 							</li>
-							<li class="trash" @click="remove(item, index)">
+							<li class="trash">
 								<slot name="remove"></slot>
 							</li>
 						</ul>
@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapActions } from "vuex";
 export default {
 	name: "kit-slider-mobile",
 	props: {
@@ -40,7 +40,8 @@ export default {
 	},
 	data() {
 		return {
-			activeSlide: 0
+			activeSlide: 0,
+			sensitivity: 25
 		};
 	},
 	computed: {
@@ -57,33 +58,25 @@ export default {
 		favorites(selected) {
 			const favourite = (selected.favourite = !selected.favourite);
 			this.getFavourites({
-				author: selected.author,
-				description: selected.description,
-				favourite: favourite,
-				id: selected.id,
-				image: selected.image,
-				name: selected.name
+				favourite: favourite
 			});
-		},
-		remove(item, index) {
-			if (this.list[index] === item) {
-				this.list.splice(index, 1);
-			} else {
-				let found = this.list.indexOf(item);
-				this.list.splice(found, 1);
-			}
 		},
 		onPan(e) {
 			const percentage = ((100 / this.count) * e.deltaX) / window.innerWidth;
 			const transform = percentage - (100 / this.count) * this.activeSlide;
 			this.$refs.list.style.transform = `translateX(${transform}%)`;
+			this.$refs.list.style.transition = `transform(500ms cubic-bezier(0.5, 0, 0.5, 1) 0s)`;
 			if (e.isFinal) {
-				if (percentage < 0) {
-					this.goToSlide(this.activeSlide + 1);
-				} else if (percentage > 0) {
+				if (e.velocityX > 1) {
 					this.goToSlide(this.activeSlide - 1);
+				} else if (e.velocityX < -1) {
+					this.goToSlide(this.activeSlide + 1);
 				} else {
-					this.goToSlide(this.activeSlide);
+					if (percentage <= -(this.sensitivity / this.count))
+						this.goToSlide(this.activeSlide + 1);
+					else if (percentage >= this.sensitivity / this.count)
+						this.goToSlide(this.activeSlide - 1);
+					else this.goToSlide(this.activeSlide);
 				}
 			}
 		},
@@ -95,7 +88,8 @@ export default {
 			} else {
 				this.activeSlide = number;
 			}
-			const percentage = -(100 / this.count) * this.activeSlide; //
+			const percentage = -(100 / this.count) * this.activeSlide;
+			this.$refs.list.style.transition = `transform(500ms cubic-bezier(0.5, 0, 0.5, 1) 0s)`;
 			this.$refs.list.style.transform = `translateX(${percentage}%)`;
 		}
 	}
@@ -103,11 +97,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.slide-wrap {
+	transition: transform 100ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
+}
 .list-wrap {
 	display: grid;
 	grid-template-columns: repeat(5, 19%);
 	grid-gap: 10px;
-	transition: all 0.5s ease;
+	transition: all 0.7s ease;
 	.list-element {
 		overflow: hidden;
 	}

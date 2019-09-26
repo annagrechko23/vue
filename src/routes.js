@@ -36,6 +36,5 @@ const router = new VueRouter({
     component: Playlist
   }
 ]
-})
-
+});
 export default router;
