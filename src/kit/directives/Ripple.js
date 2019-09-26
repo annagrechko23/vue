@@ -1,6 +1,6 @@
 export default {
 	name: "ripple",
-	inserted: function (el, binding) {
+	inserted: (el, binding) => {
 		let ripple = document.createElement("span");
 		ripple.setAttribute("class", "simple");
 		el.appendChild(ripple);
@@ -12,8 +12,8 @@ export default {
 			ripple.classList.remove("anotherclass");
 		});
 
-		let getRip = (event, el) => {
-			let rect = el.getBoundingClientRect(),
+		const getRip = (event, el) => {
+			const rect = el.getBoundingClientRect(),
 				top = event.offsetY,
 				left = event.offsetX,
 				height = rect.height,
@@ -25,10 +25,10 @@ export default {
 					}
 					ripple.classList.add("anotherclass");
 					ripple.style.position = "absolute";
-					ripple.style.width = buttonSize + "px";
-					ripple.style.height = height + "px";
-					ripple.style.top = top - rect.height / 2 + "px";
-					ripple.style.left = left - buttonSize / 2 + "px";
+					ripple.style.width = `${buttonSize}px`;
+					ripple.style.height = `${height}px`;
+					ripple.style.top = `${top - rect.height / 2}px`;
+					ripple.style.left = `${left - buttonSize / 2}px`;
 				}
 			}, 100);
 		}
