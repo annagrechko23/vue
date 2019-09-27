@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
 	state: {
-		token: window.$cookies.get("token"),
+		token: '',
 		favourites: [],
 		playlist: [],
 		albums: [],
@@ -20,9 +20,6 @@ export const store = new Vuex.Store({
 	},
 
 	mutations: {
-		login(state) {
-			state.pending = true;
-		},
 		setAlbums(state, data) {
 			state.albums = data;
 		},
@@ -32,7 +29,7 @@ export const store = new Vuex.Store({
 		favorites(state, data) {
 			state.albums = state.albums.map((element, index) => {
 				if (element.id === data.id) {
-					this.$api.albums.put({
+					this.$api.albums.put({ // we don't do api calls in mutations
 						id: data.id,
 						payload: data,
 					})
@@ -53,11 +50,31 @@ export const store = new Vuex.Store({
 			state.pending = false;
 		},
 		logout(state) {
-			state.token = false;
+			state.token = '';
 		},
 	},
 
 	actions: {
+    async init({ commit, dispatch }) {
+      const token = window.$cookies.get("token");
+      if (token) {
+        commit('setToken', token);
+        await Promise.all([
+          dispatch('getAlbums'),
+          dispatch('getProfile')
+        ]);
+      }
+      this.subscribe(({ type, payload }) => {
+        switch (type) {
+          case 'setToken':
+            window.$cookies.set('token', payload);
+            break;
+          case 'logout':
+            window.$cookies.remove('token');
+            break;
+        }
+      });
+    },
 		async getAlbums({ commit }) {
 			const data = await this.$api.albums.get();
 			if (!data) return;
@@ -72,39 +89,32 @@ export const store = new Vuex.Store({
 			await this.$api.profile.put(payload);
 			commit('updateUser', payload);
 		},
-		async login({ commit }) {
-			commit('login');
-			const data = await this.$api.auth.post();
-			commit('setToken', data.token);
+		async login({ commit, dispatch }) {
+      const { token, ...user } = await this.$api.auth.signin();
+      commit('setToken', token);
+      commit('setUser', user);
+      dispatch('getAlbums');
 			this.$router.push("/playlist");
 		},
 		async refresh({ commit }) {
-			const data = await this.$api.auth.patch();
-			commit('setToken', data.token);
+			const { token } = await this.$api.auth.refresh();
+			commit('setToken', token);
 		},
 		async changeEmail({ commit }, payload) {
-			await this.$api.profile.put(payload);
-			commit('updateUser', payload);
+			const user = await this.$api.profile.put(payload);
+			commit('updateUser', user);
 		},
 		async getFavourites({ commit }, payload) {
 			commit('favorites', payload);
 		},
-		async setLogout({ commit }) {
-			await this.$api.auth.post()
-			window.$cookies.remove('token');
+		async logout({ commit }) {
+			await this.$api.auth.signout()
 			commit('logout');
 		}
 	},
 	getters: {
 		isAuth: state => Boolean(state.token),
-		setAlbums: state => state.albums,
-		user: state => state.user,
 		favourites: state => state.albums.filter(al => al.favourite)
 	},
 
-});
-store.subscribe((mutation) => {
-	if (mutation.type === 'setToken') {
-		window.$cookies.set('token', mutation.payload);
-	}
 });

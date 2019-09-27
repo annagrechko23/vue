@@ -35,7 +35,7 @@ export default {
 	methods: {
 		...mapActions(["getProfile", "changeEmail"]),
 		save() {
-			let profile = {
+			const profile = { // use const when you don't wanna change a variable
 				name: this.user.name,
 				surnname: this.user.surnname,
 				email: this.user.newEmail,

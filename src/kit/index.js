@@ -7,7 +7,7 @@ import {
 		AvatarSelector,
     Icon,
     Card,
-    SliderMobile
+    Slider
 } from "./components";
 import {
     ripple, swipe
@@ -38,7 +38,7 @@ export default {
             Vue.component(Select.name, [Select]);
             Vue.component(Icon.name, [Icon]);
             Vue.component(Card.name, [Card]);
-            Vue.component(SliderMobile.name, [SliderMobile]);
+            Vue.component(Slider.name, [Slider]);
         }
     }
 };

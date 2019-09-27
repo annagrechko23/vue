@@ -1,9 +1,9 @@
 <template>
-	<playlist title="Playlist" :setAlbums="setAlbums" />
+	<playlist title="Playlist" :albums="albums" />
 </template>
 
 <script>
-import { mapActions, mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 import Playlist from "../components/layout/Playlist.vue";
 
 export default {
@@ -12,14 +12,9 @@ export default {
 		Playlist
 	},
 	computed: {
-		...mapGetters(["setAlbums", "isAuth"])
-	},
-	async created() {
-		await this.getAlbums();
-	},
-	methods: {
-		...mapActions(["getAlbums"])
-	},
+    ...mapState(['albums']),
+		...mapGetters(["isAuth"])
+	}
 };
 </script>
 

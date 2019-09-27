@@ -4,7 +4,6 @@
 		<form @submit.prevent="setUser">
 			<div class="avatar-wrapper">
 				<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
-
 				<div class="title-inputs">
 					<div class="wrap-input">
 						<kit-input type="text" v-model="user.name" placeholder="First Name:">
@@ -22,7 +21,6 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="wrap-input">
 				<kit-input type="email" v-model="user.email" placeholder="Email:">
 					<template #icon>
@@ -49,7 +47,6 @@ export default {
 		return {
 			formats: ["image/jpg", "image/jpeg", "image/png"],
 			sizeKB: 700,
-
 			user: {
 				email: "",
 				name: "",
@@ -62,7 +59,7 @@ export default {
 	methods: {
 		async setUser() {
 			try {
-				await this.$api.auth.signup(this.user);
+				await this.$api.auth.signup(this.user); // create action signup, after signup we need to set our user in store
 				this.status = "success";
 			} catch (e) {
 				this.status = "error";

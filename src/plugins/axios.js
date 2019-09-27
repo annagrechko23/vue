@@ -19,7 +19,7 @@ export default {
 				if (error.response) {
 					const { status } = error.response;
 					if (status === 401) {
-						await store.dispatch('setLogout');
+						await store.dispatch('logout');
 					} else if (status === 419) {
 						return store.dispatch('refresh')
 							.then(() => axios.request(error.config));
@@ -39,8 +39,8 @@ export default {
 				put: ({ id, payload }) => axios.put(`/albums/${id}`, payload)
 			},
 			auth: {
-				post: () => axios.post('/auth/signin'),
-				patch: data => axios.patch('/auth/refresh', data),
+				signin: () => axios.post('/auth/signin'),
+				refresh: data => axios.patch('/auth/refresh', data),
 				signout: () => axios.post('/auth/signout'),
 				signup: data => axios.post('/auth/signup', data)
 			},

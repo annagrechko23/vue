@@ -3,7 +3,7 @@
 		<h1 class="main-title">{{title}}</h1>
 		<div class v-if="window.width > 767">
 			<div class="list-wrap">
-				<kit-card v-for="item in setAlbums" :list="item" :key="item.id">
+				<kit-card v-for="item in albums" :list="item" :key="item.id">
 					<template #favorites>
 						<kit-icon icon="heart" />
 					</template>
@@ -16,7 +16,7 @@
 				</kit-card>
 			</div>
 		</div>
-		<kit-slider-mobile v-else :list="setAlbums">
+		<kit-slider v-else :list="albums">
 			<template #favorites>
 				<kit-icon icon="heart" />
 			</template>
@@ -26,7 +26,7 @@
 			<template #remove>
 				<kit-icon icon="trash" />
 			</template>
-		</kit-slider-mobile>
+		</kit-slider>
 	</div>
 </template>
 
@@ -38,7 +38,7 @@ export default {
 			type: String,
 			default: "Playlist"
 		},
-		setAlbums: { type: Array, default: () => [] }
+		albums: { type: Array, default: () => [] }
 	},
 
 	data() {

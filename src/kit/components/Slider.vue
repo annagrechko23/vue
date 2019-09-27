@@ -34,7 +34,7 @@
 <script>
 import { mapActions } from "vuex";
 export default {
-	name: "kit-slider-mobile",
+	name: "kit-slider",
 	props: {
 		list: { type: Array, default: () => [] }
 	},
@@ -56,9 +56,8 @@ export default {
 	methods: {
 		...mapActions(["getFavourites"]),
 		favorites(selected) {
-			const favourite = (selected.favourite = !selected.favourite);
 			this.getFavourites({
-				favourite: favourite
+				favourite: !selected.favourite
 			});
 		},
 		onPan(e) {

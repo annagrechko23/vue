@@ -6,7 +6,6 @@
 					<form @submit="save">
 						<div class="avatar-wrapper">
 							<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
-
 							<div class="title-inputs">
 								<div class="wrap-input">
 									<kit-input type="text" v-model="user.name" placeholder="First Name:">
@@ -61,26 +60,18 @@ export default {
 			sizeKB: 700
 		};
 	},
-	async created() {
-		await this.getProfile();
-		await this.getAlbums();
-	},
-	computed: {
-		...mapGetters(["isAuth", "user", "favourites"])
-	},
-	methods: {
-		...mapActions(["getProfile", "updateProfile", "getAlbums"]),
-		save() {
-			let profile = {
-				name: this.user.name,
-				surnname: this.user.surnname,
-				email: this.user.email,
-				image: this.user.image,
-				id: this.user.id
-			};
-			this.updateProfile(profile);
-		}
-	}
+	computed: mapGetters(["isAuth", "user", "favourites"]),
+	methods: mapActions({
+    async updateProfile(dispatch) {
+      await dispatch('updateProfile', {
+        name: this.user.name,
+        surnname: this.user.surnname,
+        email: this.user.email,
+        image: this.user.image,
+        id: this.user.id
+      });
+    }
+  })
 };
 </script>
 

@@ -1,3 +1,5 @@
+import Hammer from 'hammerjs';
+
 export default {
 	name: 'swipe',
 	bind: (el, binding) => {

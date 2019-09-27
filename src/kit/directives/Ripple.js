@@ -1,7 +1,7 @@
 export default {
 	name: "ripple",
 	inserted: (el, binding) => {
-		let ripple = document.createElement("span");
+		const ripple = document.createElement("span");
 		ripple.setAttribute("class", "simple");
 		el.appendChild(ripple);
 
@@ -13,11 +13,11 @@ export default {
 		});
 
 		const getRip = (event, el) => {
-			const rect = el.getBoundingClientRect(),
-				top = event.offsetY,
-				left = event.offsetX,
-				height = rect.height,
-				buttonSize = rect.width > rect.height ? rect.width : rect.height;
+      const rect = el.getBoundingClientRect();
+      const { offsetY: top, offsetX: left } = event.offsetY;
+			const height = rect.height;
+      const buttonSize = rect.width > rect.height ? rect.width : rect.height;
+
 			setTimeout(() => {
 				if (ripple.classList.contains !== "anotherclass") {
 					if (binding.value) {

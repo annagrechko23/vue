@@ -26,17 +26,13 @@ import { mapActions, mapGetters } from "vuex";
 
 export default {
 	name: "appHeader",
-	computed: {
-		...mapGetters(["isAuth", "getEmail"])
-	},
-
-	methods: {
-		...mapActions(["setLogout"]),
-		logout() {
-			this.setLogout();
-			this.$router.push("/login");
-		}
-	}
+	computed: mapGetters(['isAuth', 'getEmail']),
+	methods: mapActions({
+    async logout(dispatch) {
+      await dispatch('logout');
+      this.$router.push("/login");
+    }
+  })
 };
 </script>
 
