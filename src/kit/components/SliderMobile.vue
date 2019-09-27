@@ -41,7 +41,7 @@ export default {
 	data() {
 		return {
 			activeSlide: 0,
-			sensitivity: 25
+			sensitivity: 35
 		};
 	},
 	computed: {
@@ -65,7 +65,6 @@ export default {
 			const percentage = ((100 / this.count) * e.deltaX) / window.innerWidth;
 			const transform = percentage - (100 / this.count) * this.activeSlide;
 			this.$refs.list.style.transform = `translateX(${transform}%)`;
-			this.$refs.list.style.transition = `transform(500ms cubic-bezier(0.5, 0, 0.5, 1) 0s)`;
 			if (e.isFinal) {
 				if (e.velocityX > 1) {
 					this.goToSlide(this.activeSlide - 1);
@@ -89,17 +88,17 @@ export default {
 				this.activeSlide = number;
 			}
 			const percentage = -(100 / this.count) * this.activeSlide;
-			this.$refs.list.style.transition = `transform(500ms cubic-bezier(0.5, 0, 0.5, 1) 0s)`;
 			this.$refs.list.style.transform = `translateX(${percentage}%)`;
+
 		}
 	}
 };
 </script>
 
 <style lang="scss" scoped>
-.slide-wrap {
-	transition: transform 400ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
-}
+// .animate {
+// 	transition: transform 400ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
+// }
 .list-wrap {
 	display: grid;
 	grid-template-columns: repeat(5, 19%);
