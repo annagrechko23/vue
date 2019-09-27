@@ -44,11 +44,6 @@ export const store = new Vuex.Store({
 		setToken(state, data) {
 			state.token = data;
 		},
-		loginSuccess(state, action) {
-			state.token = true;
-			state.email = action;
-			state.pending = false;
-		},
 		logout(state) {
 			state.token = '';
 		},
@@ -106,7 +101,7 @@ export const store = new Vuex.Store({
 		},
 		async getFavourites({ commit }, payload) {
 			commit('favorites', payload);
-		},
+    },
 		async logout({ commit }) {
 			await this.$api.auth.signout()
 			commit('logout');
