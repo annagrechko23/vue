@@ -8,15 +8,19 @@ import Playlist from "@/pages/Playlist";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
+	mode: 'history',
 	routes: [
-	{
-		path: '/',
-		redirect: '/login',
-	},
+		{
+			path: "/",
+			redirect: '/playlist',
+			component: Playlist,
+		},
   {
-    name: "/root",
     path: "/profile",
-    component: Profile,
+		component: Profile,
+		meta: {
+			requiresAuth: true,
+		}
 	},
 	{
     path: "/reset",
@@ -33,8 +37,13 @@ const router = new VueRouter({
   },
 	{
     path: "/playlist",
-    component: Playlist
+		component: Playlist,
+		meta: {
+			requiresAuth: true,
+		}
   }
-]
+],
+
 });
+
 export default router;

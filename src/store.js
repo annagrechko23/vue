@@ -27,16 +27,8 @@ export const store = new Vuex.Store({
 			state.user = data;
 		},
 		favorites(state, data) {
-			state.albums = state.albums.map((element, index) => {
-				if (element.id === data.id) {
-					this.$api.albums.put({ // we don't do api calls in mutations
-						id: data.id,
-						payload: data,
-					})
-					return { ...state.albums[index], favourite: data.favourite };
-				}
-				return element
-			});
+		console.log(state, data)
+			state.albums = data;
 		},
 		updateUser(state, payload) {
 			state.user = payload;
@@ -81,12 +73,25 @@ export const store = new Vuex.Store({
 			commit('setUser', data);
 		},
 		async updateProfile({ commit }, payload) {
+			console.log(payload)
 			await this.$api.profile.put(payload);
 			commit('updateUser', payload);
 		},
 		async login({ commit, dispatch }) {
-      const { token, ...user } = await this.$api.auth.signin();
-      commit('setToken', token);
+			const { token, ...user } = await this.$api.auth.signin();
+			await Promise.all([
+				 commit('setToken', token),
+				 commit('setUser', user),
+				 dispatch('getAlbums'),
+			]);
+			console.log(this.$router)
+			this.$router.push("/playlist");
+		},
+		async signup({ commit, dispatch }, payload) {
+
+      const { token, ...user } = await this.$api.auth.signup();
+			commit('setToken', token);
+			console.log(payload)
       commit('setUser', user);
       dispatch('getAlbums');
 			this.$router.push("/playlist");
@@ -99,8 +104,19 @@ export const store = new Vuex.Store({
 			const user = await this.$api.profile.put(payload);
 			commit('updateUser', user);
 		},
-		async getFavourites({ commit }, payload) {
-			commit('favorites', payload);
+		async getFavourites({ commit, state }, payload) {
+			state.albums = state.albums.map((element, index) => {
+				if (element.id === payload.id) {
+					this.$api.albums.put({
+						id: payload.id,
+						payload: payload,
+					})
+					return { ...state.albums[index], favourite: payload.favourite };
+				}
+				return element
+			});
+			commit('favorites', state.albums);
+
     },
 		async logout({ commit }) {
 			await this.$api.auth.signout()
@@ -113,3 +129,4 @@ export const store = new Vuex.Store({
 	},
 
 });
+

@@ -22,12 +22,12 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
 	name: "reset",
 	computed: {
-		...mapGetters(["user"])
+		...mapState(["user"])
 	},
 	created() {
 		this.getProfile();

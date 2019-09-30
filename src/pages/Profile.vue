@@ -3,7 +3,7 @@
 		<tabs>
 			<tab name="Info" :selected="true">
 				<div class="registration-wrapper">
-					<form @submit="save">
+					<form @submit.prevent="updateProfile">
 						<div class="avatar-wrapper">
 							<kit-upload v-model="user.image" :formats="formats" :size="sizeKB" />
 							<div class="title-inputs">
@@ -36,14 +36,14 @@
 				</div>
 			</tab>
 			<tab name="Favorites">
-				<playlist :setAlbums="favourites" title="Your Favourite" />
+				<playlist :albums="favourites" title="Your Favourite" />
 			</tab>
 		</tabs>
 	</div>
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 import Tab from "../components/layout/Tab.vue";
 import Tabs from "../components/layout/Tabs.vue";
 import Playlist from "../components/layout/Playlist.vue";
@@ -60,7 +60,10 @@ export default {
 			sizeKB: 700
 		};
 	},
-	computed: mapGetters(["isAuth", "user", "favourites"]),
+	computed: {
+	...mapState(['user', 'albums']),
+	...mapGetters(["isAuth", "favourites"]),
+	},
 	methods: mapActions({
     async updateProfile(dispatch) {
       await dispatch('updateProfile', {

@@ -41,6 +41,9 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+
 export default {
 	name: "registration",
 	data() {
@@ -56,16 +59,11 @@ export default {
 			}
 		};
 	},
-	methods: {
-		async setUser() {
-			try {
-				await this.$api.auth.signup(this.user); // create action signup, after signup we need to set our user in store
-				this.status = "success";
-			} catch (e) {
-				this.status = "error";
-			}
-		}
-	}
+		methods: mapActions({
+    async setUser(dispatch) {
+      await dispatch('signup', this.user);
+    }
+  })
 };
 </script>
 

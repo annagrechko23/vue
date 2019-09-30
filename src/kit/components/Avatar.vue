@@ -17,7 +17,7 @@ export default {
 		},
 		size: { // used  option instead of className
 			type: String,
-			default: "large",
+			default: "small",
 			validator: type => ["small", "medium", "large"].includes(type)
 		}
 	},

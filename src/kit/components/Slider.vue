@@ -95,9 +95,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// .animate {
-// 	transition: transform 400ms cubic-bezier(0.2, 0, 0.2, 1) 0s;
-// }
+.slide-wrap {
+	transition: all 0.5s linear;
+}
+
 .list-wrap {
 	display: grid;
 	grid-template-columns: repeat(5, 19%);

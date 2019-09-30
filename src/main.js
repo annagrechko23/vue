@@ -27,7 +27,7 @@ Vue.config.productionTip = false;
 
 Vue.use(VueCookies);
 Vue.use(Axios, { store });
-Initializer({ store });
+Initializer({ store }, router);
 
 store.$router = router;
 router.$store = store;
