@@ -1,7 +1,7 @@
 <template>
 	<div class="login-wrapper">
 		<h1 class="login-title">Login</h1>
-		<form @submit.stop="setUser">
+		<form @submit.prevent="setUser">
 			<div class="wrap-input">
 				<kit-input type="email" v-model="profile.email" placeholder="Email:">
 					<template #icon>

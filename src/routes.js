@@ -14,6 +14,9 @@ const router = new VueRouter({
 			path: "/",
 			redirect: '/playlist',
 			component: Playlist,
+      meta: {
+        requiresAuth: true,
+      }
 		},
   {
     path: "/profile",
@@ -24,7 +27,10 @@ const router = new VueRouter({
 	},
 	{
     path: "/reset",
-    component: Reset
+    component: Reset,
+    meta: {
+      requiresAuth: true,
+    }
   },
 	{
 		name: "login",

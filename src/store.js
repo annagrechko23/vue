@@ -85,7 +85,12 @@ export const store = new Vuex.Store({
 				 dispatch('getAlbums'),
 			]);
 			console.log(this.$router)
-			this.$router.push("/playlist");
+			this.$router.push({
+        path: '/playlist',
+        meta: {
+          requiresAuth: true,
+        }
+      });
 		},
 		async signup({ commit, dispatch }, payload) {
 
