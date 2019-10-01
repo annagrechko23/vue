@@ -27,7 +27,6 @@ export const store = new Vuex.Store({
 			state.user = data;
 		},
 		favorites(state, data) {
-		console.log(state, data)
 			state.albums = data;
 		},
 		updateUser(state, payload) {
@@ -73,7 +72,6 @@ export const store = new Vuex.Store({
 			commit('setUser', data);
 		},
 		async updateProfile({ commit }, payload) {
-			console.log(payload)
 			await this.$api.profile.put(payload);
 			commit('updateUser', payload);
 		},
@@ -84,7 +82,6 @@ export const store = new Vuex.Store({
 				 commit('setUser', user),
 				 dispatch('getAlbums'),
 			]);
-			console.log(this.$router)
 			this.$router.push({
         path: '/playlist',
         meta: {
@@ -96,7 +93,6 @@ export const store = new Vuex.Store({
 
       const { token, ...user } = await this.$api.auth.signup();
 			commit('setToken', token);
-			console.log(payload)
       commit('setUser', user);
       dispatch('getAlbums');
 			this.$router.push("/playlist");
