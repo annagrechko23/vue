@@ -30,6 +30,7 @@ export default {
                 Vue.component(Component.name, Component);
             });
         } else {
+					
             Vue.component(Button.name, [Button]);
             Vue.component(Input.name, [Input]);
             Vue.component(Switcher.name, [Switcher]);
